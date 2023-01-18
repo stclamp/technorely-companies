@@ -1,6 +1,6 @@
 import { IsNotEmpty } from 'class-validator';
 
-export class CreateCompany {
+export class ChangeCompany {
   @IsNotEmpty()
   readonly name: string;
   @IsNotEmpty()
