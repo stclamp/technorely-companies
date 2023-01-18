@@ -103,4 +103,13 @@ export class UserController {
       throw new UnauthorizedException();
     }
   }
+
+  @Post('logout')
+  async logout(@Res({ passthrough: true }) response: Response) {
+    response.clearCookie('jwt');
+
+    return {
+      message: 'success logout',
+    };
+  }
 }
