@@ -22,9 +22,6 @@ export class User {
   phone: string;
 
   @Column()
-  numOfEmployees: string;
-
-  @Column()
   nickname: string;
 
   @Column()

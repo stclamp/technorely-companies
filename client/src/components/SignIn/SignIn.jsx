@@ -2,8 +2,8 @@
 import { TextField, Button, Container } from "@mui/material";
 import Header from "../Header/Header";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { login, getUser } from "api/index";
+import { useDispatch } from "react-redux";
+import { login } from "api/index";
 import { setUser } from "store/slices/userSlice";
 import { useState } from "react";
 
@@ -11,7 +11,6 @@ const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
-  const state = useSelector((state) => state);
   const navigate = useNavigate();
 
   const user = {
@@ -20,22 +19,24 @@ const SignIn = () => {
   };
 
   const handleLogin = () => {
-    login(user).then((data) => {
-      dispatch(
-        setUser({
-          email: data.email,
-          id: data.id,
-          firstName: data.firstName,
-          lastName: data.lastName,
-          phone: data.phone,
-          numOfEmployees: data.numOfEmployees,
-          nickname: data.nickname,
-          description: data.description,
-          position: data.position,
-        })
-      );
-      navigate("/");
-    });
+    login(user)
+      .then((data) => {
+        dispatch(
+          setUser({
+            email: data.email,
+            id: data.id,
+            firstName: data.firstName,
+            lastName: data.lastName,
+            phone: data.phone,
+            numOfEmployees: data.numOfEmployees,
+            nickname: data.nickname,
+            description: data.description,
+            position: data.position,
+          })
+        );
+        navigate("/");
+      })
+      .catch((e) => alert("Invalid user"));
   };
 
   return (
@@ -72,7 +73,6 @@ const SignIn = () => {
             <Link to="/signup">Register now</Link>
           </form>
         </div>
-        <button onClick={() => console.log(state)}>click</button>
       </Container>
     </>
   );

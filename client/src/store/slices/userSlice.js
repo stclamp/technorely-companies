@@ -6,7 +6,6 @@ const initialState = {
   firstName: null,
   lastName: null,
   phone: null,
-  numOfEmployees: null,
   nickname: null,
   description: null,
   position: null,
@@ -22,7 +21,6 @@ const userSlice = createSlice({
       state.firstName = action.payload.firstName;
       state.lastName = action.payload.lastName;
       state.phone = action.payload.phone;
-      state.numOfEmployees = action.payload.numOfEmployees;
       state.nickname = action.payload.nickname;
       state.description = action.payload.description;
       state.position = action.payload.position;
@@ -34,7 +32,6 @@ const userSlice = createSlice({
       state.firstName = null;
       state.lastName = null;
       state.phone = null;
-      state.numOfEmployees = null;
       state.nickname = null;
       state.description = null;
       state.position = null;

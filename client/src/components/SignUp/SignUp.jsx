@@ -4,7 +4,7 @@ import { useState } from "react";
 import ReactInputMask from "react-input-mask";
 import Header from "../Header/Header";
 import { register } from "api/index";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setUser } from "store/slices/userSlice";
 
 const SignUp = () => {
@@ -13,14 +13,12 @@ const SignUp = () => {
   const [phone, setPhone] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [numOfEmployees, setNumOfEmployees] = useState("");
   const [nickname, setNickname] = useState("");
   const [description, setDescription] = useState("");
   const [position, setPosition] = useState("");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const state = useSelector((state) => state);
 
   const user = {
     email,
@@ -28,7 +26,6 @@ const SignUp = () => {
     firstName,
     lastName,
     phone,
-    numOfEmployees,
     nickname,
     description,
     position,
@@ -43,15 +40,13 @@ const SignUp = () => {
           firstName: data.firstName,
           lastName: data.lastName,
           phone: data.phone,
-          numOfEmployees: data.numOfEmployees,
           nickname: data.nickname,
           description: data.description,
           position: data.position,
         })
       );
+      navigate("/");
     });
-    console.log(state);
-    navigate("/");
   };
 
   return (
@@ -108,14 +103,6 @@ const SignUp = () => {
             value={lastName}
             onChange={(e) => {
               setLastName(e.target.value);
-            }}
-          />
-          <TextField
-            placeholder="Number of Employees"
-            color="secondary"
-            value={numOfEmployees}
-            onChange={(e) => {
-              setNumOfEmployees(e.target.value);
             }}
           />
           <TextField
