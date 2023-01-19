@@ -42,6 +42,7 @@ export class UserController {
     position: string,
   ) {
     const hashedPassword = await bcrypt.hash(password, 12);
+
     const user = await this.userService.create({
       email,
       password: hashedPassword,
@@ -79,9 +80,7 @@ export class UserController {
 
     response.cookie('jwt', jwt, { httpOnly: true });
 
-    return {
-      message: 'success',
-    };
+    return { ...user, jwt };
   }
   @Get('user')
   async user(@Req() request: Request) {
