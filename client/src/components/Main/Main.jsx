@@ -5,6 +5,7 @@ import Header from "components/Header/Header";
 import { getCompanies, logout } from "api/index";
 import { useEffect } from "react";
 import TableCompanies from "./TableCompanies/TableCompanies";
+import AddCompany from "./AddCompany/AddCompany";
 
 const Main = ({ isAuth }) => {
   const dispatch = useDispatch();
@@ -23,6 +24,7 @@ const Main = ({ isAuth }) => {
   return isAuth ? (
     <div>
       <Header handleLogout={handleLogout} isAuth={isAuth} />
+      <AddCompany />
       <TableCompanies />
     </div>
   ) : (

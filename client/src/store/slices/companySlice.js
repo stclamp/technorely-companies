@@ -12,6 +12,17 @@ export const getCompanies = createAsyncThunk(
   }
 );
 
+export const createCompany = createAsyncThunk(
+  "company/createCompany",
+  async function (company) {
+    const res = await axios.post("http://localhost:3000/companies", company, {
+      withCredentials: true,
+    });
+
+    return res.data;
+  }
+);
+
 // const initialState = [
 //   {
 //     name: null,
@@ -23,23 +34,27 @@ export const getCompanies = createAsyncThunk(
 //   },
 // ];
 
-const initialState = {
-  companies: [],
-  isLoading: false,
-};
+// const initialState = {
+//   companies: [],
+//   isLoading: false,
+// };
 
 const companySlice = createSlice({
   name: "company",
-  initialState,
+  initialState: {
+    companies: [],
+    isLoading: false,
+  },
   reducers: {
-    // setCompany(state, action) {
-    //   state.name = action.payload.name;
-    //   state.adress = action.payload.adress;
-    //   state.service = action.payload.service;
-    //   state.numOfEmployees = action.numOfEmployees;
-    //   state.description = action.description;
-    //   state.type = action.payload.type;
-    // },
+    setCompany(state, action) {
+      state.createCompany.name = action.payload.name;
+      state.createCompany.adress = action.payload.adress;
+      state.createCompany.service = action.payload.service;
+      state.createCompany.numOfEmployees = action.numOfEmployees;
+      state.createCompany.description = action.description;
+      state.createCompany.type = action.payload.type;
+      state.createCompany.userId = action.payload.userId;
+    },
     // removeCompany(state) {
     //   state.name = null;
     //   state.adress = null;
@@ -56,6 +71,9 @@ const companySlice = createSlice({
     [getCompanies.fulfilled]: (state, action) => {
       state.companies = action.payload;
       state.isLoading = false;
+    },
+    [createCompany.fulfilled]: (state, action) => {
+      state.companies.push(action.payload);
     },
   },
 });

@@ -13,4 +13,6 @@ export class CreateCompany {
   readonly description: string;
   @IsNotEmpty()
   readonly type: string;
+  @IsNotEmpty()
+  readonly userId: string;
 }

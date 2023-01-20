@@ -2,7 +2,7 @@ import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "store/slices/userSlice";
-import { getCompanies } from "store/slices/companySlice";
+import { createCompany, getCompanies } from "store/slices/companySlice";
 import SignIn from "./components/SignIn/SignIn";
 import SignUp from "./components/SignUp/SignUp";
 import Main from "./components/Main/Main";
@@ -15,9 +15,8 @@ function App() {
   useEffect(() => {
     if (localStorage.getItem("email")) {
       dispatch(getUser());
-      dispatch(getCompanies());
-      console.log(store);
     }
+    dispatch(getCompanies());
   }, [dispatch]);
 
   return (

@@ -14,4 +14,6 @@ export class Company extends Model {
   description: string;
   @Column
   type: string;
+  @Column
+  userId: string;
 }

@@ -18,6 +18,11 @@ const TableCompanies = () => {
   //   };
 
   //   console.log(store);
+  const filteredCompanies = store.company.companies.filter(
+    (item) => +item.userId === +store.user.id
+  );
+
+  console.log(filteredCompanies);
 
   return (
     <>
@@ -35,10 +40,10 @@ const TableCompanies = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {store.company.companies.length > 0 &&
-                store.company.companies.map((row) =>
+              {filteredCompanies &&
+                filteredCompanies.map((row) =>
                   store.company.isLoading ? (
-                    <p></p>
+                    <p>Loading</p>
                   ) : (
                     <TableRow
                       key={row.id}
