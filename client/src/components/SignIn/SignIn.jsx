@@ -43,7 +43,7 @@ const SignIn = ({ isAuth, isLoading }) => {
   return !isAuth ? (
     <>
       {isLoading ? (
-        <p>Loading</p>
+        <p></p>
       ) : (
         <>
           <Header />

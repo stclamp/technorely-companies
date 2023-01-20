@@ -28,3 +28,9 @@ export const logout = async () => {
   localStorage.removeItem("email");
   return res;
 };
+
+export const getCompanies = async () => {
+  const res = await axiosInstance.get("http://localhost:3000/companies");
+  console.log(res.data);
+  return res.data;
+};

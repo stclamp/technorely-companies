@@ -2,10 +2,8 @@ import "./Header.css";
 import { Container } from "@mui/material";
 import { Link } from "react-router-dom";
 import React from "react";
-import { useAuth } from "hooks/use-auth";
 
-const Header = ({ handleLogout }) => {
-  const { isAuth } = useAuth();
+const Header = ({ handleLogout, isAuth }) => {
   return (
     <header className="header">
       <Container>

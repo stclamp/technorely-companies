@@ -1,9 +1,10 @@
 import { Navigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { removeUser, getUser } from "store/slices/userSlice";
+import { removeUser } from "store/slices/userSlice";
 import Header from "components/Header/Header";
-import { logout } from "api/index";
+import { getCompanies, logout } from "api/index";
 import { useEffect } from "react";
+import TableCompanies from "./TableCompanies/TableCompanies";
 
 const Main = ({ isAuth }) => {
   const dispatch = useDispatch();
@@ -14,17 +15,15 @@ const Main = ({ isAuth }) => {
   };
 
   useEffect(() => {
-    if (localStorage.getItem("email")) {
-      dispatch(getUser());
-    }
+    // if (localStorage.getItem("email")) {
+    //   dispatch(getUser());
+    // }
   }, [dispatch]);
 
   return isAuth ? (
     <div>
-      <Header handleLogout={handleLogout} />
-      <h1>Welcome</h1>
-
-      <button>Log out from</button>
+      <Header handleLogout={handleLogout} isAuth={isAuth} />
+      <TableCompanies />
     </div>
   ) : (
     <Navigate to="/signin" />
