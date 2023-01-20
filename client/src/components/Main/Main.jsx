@@ -1,12 +1,11 @@
 import { Navigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { setUser, removeUser } from "store/slices/userSlice";
+import { useDispatch } from "react-redux";
+import { removeUser, getUser } from "store/slices/userSlice";
 import Header from "components/Header/Header";
-import { getUser, logout } from "api/index";
+import { logout } from "api/index";
 import { useEffect } from "react";
-import { useAuth } from "hooks/use-auth";
 
-const Main = () => {
+const Main = ({ isAuth }) => {
   const dispatch = useDispatch();
 
   const handleLogout = () => {
@@ -14,53 +13,13 @@ const Main = () => {
     dispatch(removeUser());
   };
 
-  // if (getUser().catch((e) => e.response.status === 401)) {
-  //   logout();
-  //   dispatch(removeUser());
-  // }
-  // if (getUser()) {
-  //   getUser().then((data) => {
-  //     dispatch(
-  //       setUser({
-  //         email: data.email,
-  //         id: data.id,
-  //         firstName: data.firstName,
-  //         lastName: data.lastName,
-  //         phone: data.phone,
-  //         numOfEmployees: data.numOfEmployees,
-  //         nickname: data.nickname,
-  //         description: data.description,
-  //         position: data.position,
-  //       })
-  //     );
-  //   });
-  // }
+  useEffect(() => {
+    if (localStorage.getItem("email")) {
+      dispatch(getUser());
+    }
+  }, [dispatch]);
 
-  if (getUser()) {
-    getUser()
-      .then((data) => {
-        dispatch(
-          setUser({
-            email: data.email,
-            id: data.id,
-            firstName: data.firstName,
-            lastName: data.lastName,
-            phone: data.phone,
-            numOfEmployees: data.numOfEmployees,
-            nickname: data.nickname,
-            description: data.description,
-            position: data.position,
-          })
-        );
-      })
-      .catch((e) => console.log(e));
-  }
-
-  const state = useSelector((state) => state);
-  console.log(state.user);
-  const { isAuth } = useAuth();
-
-  return state.user.email ? (
+  return isAuth ? (
     <div>
       <Header handleLogout={handleLogout} />
       <h1>Welcome</h1>

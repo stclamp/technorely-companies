@@ -9,6 +9,7 @@ export const login = async (user) => {
     "http://localhost:3000/api/signin",
     user
   );
+  localStorage.setItem("email", res.data.email);
 
   return res.data;
 };
@@ -24,11 +25,6 @@ export const register = async (user) => {
 
 export const logout = async () => {
   const res = await axiosInstance.post("http://localhost:3000/api/logout");
-
-  console.log(res);
-};
-
-export const getUser = async () => {
-  const res = await axiosInstance.get("http://localhost:3000/api/user");
-  return res.data;
+  localStorage.removeItem("email");
+  return res;
 };
