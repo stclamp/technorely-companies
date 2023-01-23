@@ -1,11 +1,12 @@
 import { Button, Container } from "@mui/material";
 import Header from "components/Header/Header";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import ReactInputMask from "react-input-mask";
 import { useDispatch, useSelector } from "react-redux";
+import { Navigate } from "react-router-dom";
 import { editUser } from "store/slices/userSlice";
 
-const Account = () => {
+const Account = ({ handleLogout }) => {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [isEditable, setIsEditable] = useState(false);
@@ -27,29 +28,41 @@ const Account = () => {
   };
 
   const handleSave = () => {
-    setIsEditable(false);
-    dispatch(
-      editUser({
-        email: user.email,
-        firstName,
-        lastName,
-        nickname,
-        phone,
-        position,
-        description,
-      })
-    );
+    if (
+      !firstName.trim() ||
+      !lastName.trim() ||
+      !nickname.trim() ||
+      !phone.trim() ||
+      !position.trim() ||
+      !description.trim()
+    ) {
+      alert("Input corret data");
+      setIsEditable(true);
+    } else {
+      setIsEditable(false);
+      dispatch(
+        editUser({
+          email: user.email,
+          firstName,
+          lastName,
+          nickname,
+          phone,
+          position,
+          description,
+        })
+      );
+    }
   };
 
-  return (
+  return user.isAuth ? (
     <>
-      <Header />
+      <Header handleLogout={handleLogout} />
 
       <Container>
         <div className="account__wrapper">
           <h2>Account info</h2>
           <p className="account__text">
-            Your first name:{" "}
+            Your first name:
             {isEditable ? (
               <input
                 type="text"
@@ -61,7 +74,7 @@ const Account = () => {
             )}
           </p>
           <p className="account__text">
-            Your last name:{" "}
+            Your last name:
             {isEditable ? (
               <input
                 type="text"
@@ -73,7 +86,7 @@ const Account = () => {
             )}
           </p>
           <p className="account__text">
-            Your nickname:{" "}
+            Your nickname:
             {isEditable ? (
               <input
                 type="text"
@@ -85,7 +98,7 @@ const Account = () => {
             )}
           </p>
           <p className="account__text">
-            Your phone:{" "}
+            Your phone:
             {isEditable ? (
               <ReactInputMask
                 mask="+380 (99) 999-99-99"
@@ -101,7 +114,7 @@ const Account = () => {
             )}
           </p>
           <p className="account__text">
-            Your position:{" "}
+            Your position:
             {isEditable ? (
               <input
                 type="text"
@@ -113,7 +126,7 @@ const Account = () => {
             )}
           </p>
           <p className="account__text">
-            Your description:{" "}
+            Your description:
             {isEditable ? (
               <input
                 type="text"
@@ -137,6 +150,8 @@ const Account = () => {
         </div>
       </Container>
     </>
+  ) : (
+    <Navigate to="/signin" />
   );
 };
 export default Account;

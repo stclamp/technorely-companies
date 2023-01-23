@@ -7,7 +7,17 @@ export const getCompanies = createAsyncThunk(
     const res = await axios.get("http://localhost:3000/companies", {
       withCredentials: true,
     });
-    // console.log(res.data);
+    return res.data;
+  }
+);
+
+export const getCompany = createAsyncThunk(
+  "company/getCompany",
+  async function (id) {
+    const res = await axios.get(`http://localhost:3000/companies/${id}`, {
+      withCredentials: true,
+    });
+
     return res.data;
   }
 );
@@ -23,26 +33,11 @@ export const createCompany = createAsyncThunk(
   }
 );
 
-// const initialState = [
-//   {
-//     name: null,
-//     adress: null,
-//     service: null,
-//     numOfEmployees: null,
-//     description: null,
-//     type: null,
-//   },
-// ];
-
-// const initialState = {
-//   companies: [],
-//   isLoading: false,
-// };
-
 const companySlice = createSlice({
   name: "company",
   initialState: {
     companies: [],
+    company: {},
     isLoading: false,
   },
   reducers: {
@@ -74,6 +69,9 @@ const companySlice = createSlice({
     },
     [createCompany.fulfilled]: (state, action) => {
       state.companies.push(action.payload);
+    },
+    [getCompany.fulfilled]: (state, action) => {
+      state.company = action.payload;
     },
   },
 });
