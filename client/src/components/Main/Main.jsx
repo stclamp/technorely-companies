@@ -1,15 +1,24 @@
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "components/Header/Header";
 import TableCompanies from "./TableCompanies/TableCompanies";
 import AddCompany from "./AddCompany/AddCompany";
+import { useEffect } from "react";
 
 const Main = ({ handleLogout, id, setId, isRedirect, setIsRedirect }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const store = useSelector((state) => state);
 
-  return store.user.isAuth ? (
+  console.log(!store.user.isAuth);
+  useEffect(() => {
+    if (!store.user.isAuth && store.user.isLoading) {
+      navigate("/signin");
+    }
+  }, []);
+
+  return (
     <div>
       <Header handleLogout={handleLogout} />
       <AddCompany />
@@ -20,8 +29,6 @@ const Main = ({ handleLogout, id, setId, isRedirect, setIsRedirect }) => {
         setIsRedirect={setIsRedirect}
       />
     </div>
-  ) : (
-    <Navigate to="/signin" />
   );
 };
 

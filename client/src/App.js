@@ -8,6 +8,7 @@ import { logout } from "api/index";
 import SignIn from "./components/SignIn/SignIn";
 import SignUp from "./components/SignUp/SignUp";
 import Main from "./components/Main/Main";
+import { PrivateRoute } from "components/PrivateRoute/PrivateRoute";
 import { useEffect, useState } from "react";
 import Account from "components/Account/Account";
 import Company from "components/Main/Company/Company";

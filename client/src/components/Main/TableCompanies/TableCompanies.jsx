@@ -9,21 +9,16 @@ import { Container } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import "./TableCompanies.css";
 import { getCompany } from "store/slices/companySlice";
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const TableCompanies = () => {
   const store = useSelector((state) => state);
-  // const [id, setId] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  //   const removeCompany = (id) => {
-  //     dispatch(removeCompany(id));
-  //   };
-
   const getCompanyFromDb = (id) => {
     dispatch(getCompany(id));
+    navigate(`/company/${id}`);
   };
   const filteredCompanies = store.company.companies.filter(
     (item) => +item.userId === +store.user.id
@@ -56,23 +51,13 @@ const TableCompanies = () => {
                       sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                       onClick={() => {
                         getCompanyFromDb(row.id);
-                        navigate(`/company/${row.id}`);
+                        // navigate(`/company/${row.id}`);
                       }}
                     >
                       <TableCell component="th" scope="row">
                         {row.name}
                       </TableCell>
-                      <TableCell align="right">
-                        {/* <Link
-                          to={`/company/${row.id}`}
-                          onClick={() => {
-                            setId(row.id);
-                            setIsRedirect(true);
-                          }}
-                        > */}
-                        {row.adress}
-                        {/* </Link> */}
-                      </TableCell>
+                      <TableCell align="right">{row.adress}</TableCell>
                       <TableCell align="right">{row.service}</TableCell>
                       <TableCell align="right">{row.numOfEmployees}</TableCell>
                       <TableCell align="right">{row.description}</TableCell>

@@ -1,25 +1,27 @@
 import Header from "components/Header/Header";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { getCompany } from "store/slices/companySlice";
 
 function Company({ id, handleLogout }) {
   const company = useSelector((state) => state.company.company);
   const user = useSelector((state) => state.user);
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getCompany(id));
-  }, []);
+    if (!user.isAuth && user.isLoading) {
+      navigate("/signin");
+    }
+  }, [dispatch, id, navigate, user.isAuth, user.isLoading]);
 
-  return user.isAuth ? (
+  return (
     <>
       <Header handleLogout={handleLogout} />
-      <p>{company.id}</p>
+      <p>{company.name} </p>
     </>
-  ) : (
-    <Navigate to="/signin" />
   );
 }
 export default Company;

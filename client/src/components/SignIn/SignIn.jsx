@@ -5,7 +5,7 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "api/index";
 import { setUser } from "store/slices/userSlice";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
@@ -41,7 +41,7 @@ const SignIn = () => {
       .catch((e) => alert("Invalid user"));
   };
 
-  return !store.user.isAuth ? (
+  return (
     <>
       {store.user.isLoading ? (
         <p></p>
@@ -83,8 +83,6 @@ const SignIn = () => {
         </>
       )}
     </>
-  ) : (
-    <Navigate to="/" />
   );
 };
 

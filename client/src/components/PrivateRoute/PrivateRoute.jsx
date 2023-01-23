@@ -1,24 +1,18 @@
-import { Route, Navigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { Navigate, useLocation } from "react-router-dom";
 
-const PrivateRoute = ({ element: Element, ...rest }) => {
-  //   console.log(rest);
-  return (
-    <Route
-      {...rest}
-      render={(props) =>
-        rest.isAuth ? (
-          <Element {...props} />
-        ) : (
-          <Navigate
-            to={{
-              pathname: "/signin",
-              state: { from: props.location },
-            }}
-          />
-        )
-      }
-    />
-  );
-};
+export function PrivateRoute(props) {
+  const { children } = props;
+  const location = useLocation();
+  const { isAuth } = useSelector((store) => store.user);
+  useEffect(() => {
+    console.log(isAuth);
+  }, []);
 
-export default PrivateRoute;
+  if (!isAuth) {
+    return <Navigate to="/signin" state={{ from: location }} />;
+  }
+
+  return children;
+}
