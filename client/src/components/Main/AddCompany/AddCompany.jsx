@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createCompany } from "store/slices/companySlice";
 import "./AddCompany.css";
+import Modal from "./Modal/Modal";
 
 const AddCompany = () => {
   const [name, setName] = useState("");
@@ -11,9 +12,18 @@ const AddCompany = () => {
   const [numOfEmployees, setNumOfEmployees] = useState("");
   const [description, setDescription] = useState("");
   const [type, setType] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
 
   const dispatch = useDispatch();
   const store = useSelector((state) => state);
+
+  const handleModalOpen = () => {
+    setIsOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsOpen(false);
+  };
 
   const handleCreateCompany = (e) => {
     e.preventDefault();
@@ -39,67 +49,43 @@ const AddCompany = () => {
       })
     );
 
-    console.log(store);
-
     setName("");
     setAdress("");
     setService("");
     setNumOfEmployees("");
     setDescription("");
     setType("");
+    handleModalClose();
   };
 
   return (
     <>
       <div className="add-company__wrapper">
         <Container>
-          <form onSubmit={handleCreateCompany} className="add-company__form">
-            <TextField
-              label="Company name"
-              variant="standard"
-              color="secondary"
-              onChange={(e) => setName(e.target.value)}
-              value={name}
-            />
-            <TextField
-              label="Company adress"
-              variant="standard"
-              color="secondary"
-              onChange={(e) => setAdress(e.target.value)}
-              value={adress}
-            />
-            <TextField
-              label="Service of activity"
-              variant="standard"
-              color="secondary"
-              onChange={(e) => setService(e.target.value)}
-              value={service}
-            />
-            <TextField
-              label="Numbers of employees"
-              variant="standard"
-              color="secondary"
-              onChange={(e) => setNumOfEmployees(e.target.value)}
-              value={numOfEmployees}
-            />
-            <TextField
-              label="Description"
-              variant="standard"
-              color="secondary"
-              onChange={(e) => setDescription(e.target.value)}
-              value={description}
-            />
-            <TextField
-              label="Type"
-              variant="standard"
-              color="secondary"
-              onChange={(e) => setType(e.target.value)}
-              value={type}
-            />
-            <Button variant="contained" type="submit">
-              Create company
-            </Button>
-          </form>
+          <Modal
+            name={name}
+            adress={adress}
+            service={service}
+            numOfEmployees={numOfEmployees}
+            description={description}
+            type={type}
+            setName={setName}
+            setAdress={setAdress}
+            setService={setService}
+            setNumOfEmployees={setNumOfEmployees}
+            setDescription={setDescription}
+            setType={setType}
+            handleCreateCompany={handleCreateCompany}
+            isOpen={isOpen}
+            handleModalClose={handleModalClose}
+          />
+          <Button
+            className="add-company__btn"
+            variant="contained"
+            onClick={handleModalOpen}
+          >
+            Add New Company
+          </Button>
         </Container>
       </div>
     </>

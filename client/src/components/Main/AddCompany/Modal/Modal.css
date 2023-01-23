@@ -1,0 +1,43 @@
+.modal__wrapper {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.5);
+  width: 100vw;
+  height: 100vh;
+  left: 0;
+  top: 0;
+  z-index: 999;
+}
+
+.modal__form {
+  position: absolute;
+  width: 60%;
+  height: 60%;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+  display: flex;
+  background-color: #fff;
+  z-index: 99;
+  flex-direction: column;
+  padding: 60px;
+}
+
+.modal__add-company-btn {
+  margin-top: 40px !important;
+  padding: 15px 0 !important;
+}
+
+.modal__input {
+  margin-bottom: 20px !important;
+}
+
+.modal__close {
+  width: 30px;
+  position: absolute;
+  right: 30px;
+  top: 30px;
+}
+
+.modal__close {
+  cursor: pointer;
+}

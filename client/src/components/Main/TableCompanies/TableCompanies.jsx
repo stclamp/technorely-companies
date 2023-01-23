@@ -7,8 +7,6 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Container } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import { getCompanies } from "store/slices/companySlice";
 
 const TableCompanies = () => {
   const store = useSelector((state) => state);
@@ -16,13 +14,9 @@ const TableCompanies = () => {
   //   const removeCompany = (id) => {
   //     dispatch(removeCompany(id));
   //   };
-
-  //   console.log(store);
   const filteredCompanies = store.company.companies.filter(
     (item) => +item.userId === +store.user.id
   );
-
-  console.log(filteredCompanies);
 
   return (
     <>
