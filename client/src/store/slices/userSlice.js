@@ -9,6 +9,17 @@ export const getUser = createAsyncThunk("user/getUser", async function () {
   return res.data;
 });
 
+export const editUser = createAsyncThunk(
+  "user/editUser",
+  async function (user) {
+    const res = await axios.post("http://localhost:3000/api/edit", user, {
+      withCredentials: true,
+    });
+
+    return res.data;
+  }
+);
+
 const initialState = {
   email: null,
   id: null,
@@ -78,6 +89,15 @@ const userSlice = createSlice({
       state.isAuth = false;
       state.isLoading = false;
       localStorage.removeItem("email");
+    },
+    [editUser.fulfilled]: (state, action) => {
+      state.email = action.payload.email;
+      state.firstName = action.payload.firstName;
+      state.lastName = action.payload.lastName;
+      state.phone = action.payload.phone;
+      state.nickname = action.payload.nickname;
+      state.description = action.payload.description;
+      state.position = action.payload.position;
     },
   },
 });

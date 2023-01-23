@@ -4,7 +4,7 @@ import { useState } from "react";
 import ReactInputMask from "react-input-mask";
 import Header from "../Header/Header";
 import { register } from "api/index";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "store/slices/userSlice";
 
 const SignUp = ({ isAuth, isLoading }) => {
@@ -19,6 +19,7 @@ const SignUp = ({ isAuth, isLoading }) => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const store = useSelector((state) => state);
 
   const user = {
     email,
@@ -50,9 +51,9 @@ const SignUp = ({ isAuth, isLoading }) => {
     });
   };
 
-  return !isAuth ? (
+  return !store.user.isAuth ? (
     <>
-      {isLoading ? (
+      {store.user.isLoading ? (
         <p></p>
       ) : (
         <>
@@ -85,7 +86,7 @@ const SignUp = ({ isAuth, isLoading }) => {
                 }}
               />
               <ReactInputMask
-                mask="+380(99) 999-99-99"
+                mask="+380 (99) 999-99-99"
                 value={phone}
                 onChange={(e) => {
                   setPhone(e.target.value);

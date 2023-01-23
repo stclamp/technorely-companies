@@ -2,8 +2,10 @@ import "./Header.css";
 import { Container } from "@mui/material";
 import { Link } from "react-router-dom";
 import React from "react";
+import { useSelector } from "react-redux";
 
-const Header = ({ handleLogout, isAuth }) => {
+const Header = ({ handleLogout }) => {
+  const store = useSelector((state) => state);
   return (
     <header className="header">
       <Container>
@@ -13,7 +15,7 @@ const Header = ({ handleLogout, isAuth }) => {
               Technorely
             </Link>
           </div>
-          {!isAuth ? (
+          {!store.user.isAuth ? (
             <div className="header__links">
               <Link className="header__link" to="/signin">
                 Sign In

@@ -32,8 +32,6 @@ export class UserController {
     lastName: string,
     @Body('phone')
     phone: string,
-    @Body('numOfEmployees')
-    numOfEmployees: string,
     @Body('nickname')
     nickname: string,
     @Body('description')
@@ -49,7 +47,6 @@ export class UserController {
       firstName,
       lastName,
       phone,
-      numOfEmployees,
       nickname,
       description,
       position,
@@ -110,5 +107,34 @@ export class UserController {
     return {
       message: 'success logout',
     };
+  }
+
+  @Post('edit')
+  async edit(
+    @Body('email')
+    email: string,
+    @Body('firstName')
+    firstName: string,
+    @Body('lastName')
+    lastName: string,
+    @Body('phone')
+    phone: string,
+    @Body('nickname')
+    nickname: string,
+    @Body('description')
+    description: string,
+    @Body('position')
+    position: string,
+  ) {
+    const user = await this.userService.findOne({ email });
+    user.email = email;
+    user.firstName = firstName;
+    user.lastName = lastName;
+    user.phone = phone;
+    user.nickname = nickname;
+    user.description = description;
+    user.position = position;
+
+    return this.userService.edit(user);
   }
 }

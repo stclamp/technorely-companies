@@ -2,16 +2,17 @@
 import { TextField, Button, Container } from "@mui/material";
 import Header from "../Header/Header";
 import { Link, Navigate, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { login } from "api/index";
 import { setUser } from "store/slices/userSlice";
 import { useState } from "react";
 
-const SignIn = ({ isAuth, isLoading }) => {
+const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const store = useSelector((state) => state);
 
   const user = {
     email,
@@ -40,9 +41,9 @@ const SignIn = ({ isAuth, isLoading }) => {
       .catch((e) => alert("Invalid user"));
   };
 
-  return !isAuth ? (
+  return !store.user.isAuth ? (
     <>
-      {isLoading ? (
+      {store.user.isLoading ? (
         <p></p>
       ) : (
         <>
