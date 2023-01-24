@@ -12,7 +12,9 @@ export class CompanyService {
   ) {}
 
   async findAll(): Promise<Company[]> {
-    return this.companyModel.findAll();
+    return await this.companyModel.findAll({
+      order: ['id'],
+    });
   }
 
   findOne(id: string): Promise<Company> {

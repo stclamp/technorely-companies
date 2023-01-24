@@ -33,6 +33,18 @@ export const createCompany = createAsyncThunk(
   }
 );
 
+export const editCompany = createAsyncThunk(
+  "company/editCompany",
+  async function (company) {
+    const res = await axios.patch(
+      `http://localhost:3000/companies/${company.id}`,
+      company
+    );
+
+    return res.data[1][0];
+  }
+);
+
 const companySlice = createSlice({
   name: "company",
   initialState: {
@@ -65,13 +77,29 @@ const companySlice = createSlice({
     },
     [getCompanies.fulfilled]: (state, action) => {
       state.companies = action.payload;
+      console.log(action.payload);
       state.isLoading = false;
+      console.log(state);
+      return state;
     },
     [createCompany.fulfilled]: (state, action) => {
       state.companies.push(action.payload);
     },
     [getCompany.fulfilled]: (state, action) => {
       state.company = action.payload;
+    },
+    [editCompany.fulfilled]: (state, action) => {
+      const newCompanies = [...state.companies];
+      const editIndex = newCompanies.findIndex(
+        (company) => company.id === action.payload.id
+      );
+      if (editIndex === -1) {
+        return state;
+      }
+      newCompanies[editIndex] = action.payload;
+      // state.companies = newCompanies;
+      console.log(state.companies);
+      return { ...state, companies: newCompanies };
     },
   },
 });

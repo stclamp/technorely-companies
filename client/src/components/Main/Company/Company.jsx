@@ -1,26 +1,163 @@
 import Header from "components/Header/Header";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getCompany } from "store/slices/companySlice";
+import { editCompany, getCompany } from "store/slices/companySlice";
+import { Button, Container } from "@mui/material";
 
 function Company({ id, handleLogout }) {
   const company = useSelector((state) => state.company.company);
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
+  const [isEditable, setIsEditable] = useState(false);
+  const [name, setName] = useState(company.name || "");
+  const [adress, setAdress] = useState("");
+  const [service, setService] = useState("");
+  const [numOfEmployees, setNumOfEmployees] = useState("");
+  const [description, setDescription] = useState("");
+  const [type, setType] = useState("");
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getCompany(id));
     if (!user.isAuth && user.isLoading) {
       navigate("/signin");
     }
-  }, [dispatch, id, navigate, user.isAuth, user.isLoading]);
+    dispatch(getCompany(id));
+  }, []);
+
+  const handleEdit = () => {
+    setIsEditable(true);
+    setName(company.name);
+    setAdress(company.adress);
+    setService(company.service);
+    setNumOfEmployees(company.numOfEmployees);
+    setDescription(company.description);
+    setType(company.type);
+  };
+
+  const handleSave = () => {
+    if (
+      !name.trim() ||
+      !adress.trim() ||
+      !service.trim() ||
+      !numOfEmployees.trim() ||
+      !description.trim() ||
+      !type.trim()
+    ) {
+      alert("Input corret data");
+      setIsEditable(true);
+    } else {
+      setIsEditable(false);
+      dispatch(
+        editCompany({
+          id: company.id,
+          name,
+          adress,
+          service,
+          numOfEmployees,
+          description,
+          type,
+          userId: company.userId,
+        })
+      );
+    }
+  };
 
   return (
     <>
       <Header handleLogout={handleLogout} />
-      <p>{company.name} </p>
+
+      <Container>
+        <div className="account__wrapper">
+          <h2>Company info</h2>
+          <p className="account__text">
+            Company name:
+            {isEditable ? (
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => {
+                  setName(e.target.value);
+                }}
+              />
+            ) : (
+              <span>{name || company.name}</span>
+            )}
+          </p>
+          <p className="account__text">
+            Company adress:
+            {isEditable ? (
+              <input
+                type="text"
+                value={adress}
+                onChange={(e) => setAdress(e.target.value)}
+              />
+            ) : (
+              <span>{company.adress}</span>
+            )}
+          </p>
+          <p className="account__text">
+            Company service:
+            {isEditable ? (
+              <input
+                type="text"
+                value={service}
+                onChange={(e) => setService(e.target.value)}
+              />
+            ) : (
+              <span>{company.service}</span>
+            )}
+          </p>
+          <p className="account__text">
+            Company number of emplyees:
+            {isEditable ? (
+              <input
+                type="text"
+                value={numOfEmployees}
+                onChange={(e) => {
+                  setNumOfEmployees(e.target.value);
+                }}
+              />
+            ) : (
+              <span>{company.numOfEmployees}</span>
+            )}
+          </p>
+          <p className="account__text">
+            Company description:
+            {isEditable ? (
+              <input
+                type="text"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+              />
+            ) : (
+              <span>{company.description}</span>
+            )}
+          </p>
+          <p className="account__text">
+            Company type:
+            {isEditable ? (
+              <input
+                type="text"
+                value={type}
+                onChange={(e) => setType(e.target.value)}
+              />
+            ) : (
+              <span>{company.type}</span>
+            )}
+          </p>
+
+          {isEditable ? (
+            <Button variant="contained" onClick={handleSave}>
+              Save Company Info
+            </Button>
+          ) : (
+            <Button variant="contained" onClick={handleEdit}>
+              Edit Company Info
+            </Button>
+          )}
+        </div>
+      </Container>
     </>
   );
 }

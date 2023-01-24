@@ -12,6 +12,6 @@ export const pgConfig = registerAs(EnumConfig.DATABASE, () => {
     password: process.env.DATABASE_PASSWORD,
     database: process.env.DATABASE_NAME,
     autoLoadEntities: true,
-    synchronize: true,
+    synchronize: false,
   };
 });

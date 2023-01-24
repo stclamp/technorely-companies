@@ -1,7 +1,6 @@
-// import "./SignIn.css";
 import { TextField, Button, Container } from "@mui/material";
 import Header from "../Header/Header";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "api/index";
 import { setUser } from "store/slices/userSlice";
@@ -13,6 +12,14 @@ const SignIn = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const store = useSelector((state) => state);
+
+  useEffect(() => {
+    if (!store.user.isAuth && store.user.isLoading) {
+      navigate("/signin");
+    } else {
+      navigate("/");
+    }
+  }, []);
 
   const user = {
     email,

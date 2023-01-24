@@ -36,11 +36,8 @@ export class CompanyController {
   }
 
   @Patch(':id')
-  changeCompany(
-    @Body() changeCopmpany: ChangeCompany,
-    @Param('id') id: string,
-  ) {
-    return this.companyService.update(id, changeCopmpany);
+  changeCompany(@Body() changeCompany: ChangeCompany, @Param('id') id: string) {
+    return this.companyService.update(id, changeCompany);
   }
 
   @Delete(':id')

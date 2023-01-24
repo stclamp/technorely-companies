@@ -1,14 +1,15 @@
 import { Button, Container } from "@mui/material";
 import Header from "components/Header/Header";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ReactInputMask from "react-input-mask";
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { editUser } from "store/slices/userSlice";
 
 const Account = ({ handleLogout }) => {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [isEditable, setIsEditable] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -16,6 +17,12 @@ const Account = ({ handleLogout }) => {
   const [phone, setPhone] = useState("");
   const [position, setPosition] = useState("");
   const [description, setDescription] = useState("");
+
+  useEffect(() => {
+    if (!user.isAuth && user.isLoading) {
+      navigate("/signin");
+    }
+  }, []);
 
   const handleEdit = () => {
     setIsEditable(true);
@@ -54,7 +61,7 @@ const Account = ({ handleLogout }) => {
     }
   };
 
-  return user.isAuth ? (
+  return (
     <>
       <Header handleLogout={handleLogout} />
 
@@ -150,8 +157,6 @@ const Account = ({ handleLogout }) => {
         </div>
       </Container>
     </>
-  ) : (
-    <Navigate to="/signin" />
   );
 };
 export default Account;

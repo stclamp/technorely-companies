@@ -41,7 +41,7 @@ function App() {
           element={<Account handleLogout={handleLogout} />}
         />
         <Route
-          path={`/company/${store.company.company.id || id}`}
+          path={`/company/${id || store.company.company.id}`}
           element={<Company id={id} handleLogout={handleLogout} />}
         />
       </Routes>
