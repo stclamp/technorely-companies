@@ -45,6 +45,13 @@ export const editCompany = createAsyncThunk(
   }
 );
 
+export const deleteCompany = createAsyncThunk(
+  "company/deleteCompany",
+  async function (id) {
+    await axios.delete(`http://localhost:3000/companies/${id}`);
+  }
+);
+
 const companySlice = createSlice({
   name: "company",
   initialState: {
@@ -62,14 +69,9 @@ const companySlice = createSlice({
       state.createCompany.type = action.payload.type;
       state.createCompany.userId = action.payload.userId;
     },
-    // removeCompany(state) {
-    //   state.name = null;
-    //   state.adress = null;
-    //   state.service = null;
-    //   state.numOfEmployees = null;
-    //   state.description = null;
-    //   state.type = null;
-    // },
+    removeCompany(state) {
+      state.company = {};
+    },
   },
   extraReducers: {
     [getCompanies.pending]: (state, action) => {
@@ -97,9 +99,21 @@ const companySlice = createSlice({
         return state;
       }
       newCompanies[editIndex] = action.payload;
-      // state.companies = newCompanies;
       console.log(state.companies);
       return { ...state, companies: newCompanies };
+    },
+    [deleteCompany.fulfilled]: (state, action) => {
+      const newCompanies = [...state.companies];
+      const removeIndex = newCompanies.findIndex(
+        (company) => company.id === action.payload
+      );
+      if (removeIndex === -1) {
+        return state;
+      }
+
+      const deletedCompany = newCompanies.splice(removeIndex, 1);
+      console.log(state.companies);
+      return { ...state, companies: deletedCompany };
     },
   },
 });

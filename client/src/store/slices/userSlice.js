@@ -59,11 +59,13 @@ const userSlice = createSlice({
       state.description = null;
       state.position = null;
       state.isAuth = false;
+      state.isLoading = false;
     },
   },
   extraReducers: {
     [getUser.pending]: (state) => {
       state.isLoading = true;
+      state.isAuth = true;
     },
     [getUser.fulfilled]: (state, action) => {
       state.email = action.payload.email;

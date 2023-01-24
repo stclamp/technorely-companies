@@ -2,8 +2,15 @@ import Header from "components/Header/Header";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { editCompany, getCompany } from "store/slices/companySlice";
+import {
+  editCompany,
+  getCompany,
+  deleteCompany,
+  removeCompany,
+  getCompanies,
+} from "store/slices/companySlice";
 import { Button, Container } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 function Company({ id, handleLogout }) {
   const company = useSelector((state) => state.company.company);
@@ -11,11 +18,13 @@ function Company({ id, handleLogout }) {
   const navigate = useNavigate();
   const [isEditable, setIsEditable] = useState(false);
   const [name, setName] = useState(company.name || "");
-  const [adress, setAdress] = useState("");
-  const [service, setService] = useState("");
-  const [numOfEmployees, setNumOfEmployees] = useState("");
-  const [description, setDescription] = useState("");
-  const [type, setType] = useState("");
+  const [adress, setAdress] = useState(company.adress || "");
+  const [service, setService] = useState(company.service || "");
+  const [numOfEmployees, setNumOfEmployees] = useState(
+    company.numOfEmployees || ""
+  );
+  const [description, setDescription] = useState(company.description || "");
+  const [type, setType] = useState(company.type || "");
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -24,6 +33,16 @@ function Company({ id, handleLogout }) {
     }
     dispatch(getCompany(id));
   }, []);
+
+  const handleRemove = (id) => {
+    const answer = window.confirm("Are yoy sure?");
+    if (answer) {
+      dispatch(deleteCompany(id));
+      dispatch(removeCompany());
+      dispatch(getCompanies());
+      navigate("/");
+    }
+  };
 
   const handleEdit = () => {
     setIsEditable(true);
@@ -93,7 +112,7 @@ function Company({ id, handleLogout }) {
                 onChange={(e) => setAdress(e.target.value)}
               />
             ) : (
-              <span>{company.adress}</span>
+              <span>{adress || company.adress}</span>
             )}
           </p>
           <p className="account__text">
@@ -105,7 +124,7 @@ function Company({ id, handleLogout }) {
                 onChange={(e) => setService(e.target.value)}
               />
             ) : (
-              <span>{company.service}</span>
+              <span>{service || company.service}</span>
             )}
           </p>
           <p className="account__text">
@@ -119,7 +138,7 @@ function Company({ id, handleLogout }) {
                 }}
               />
             ) : (
-              <span>{company.numOfEmployees}</span>
+              <span>{numOfEmployees || company.numOfEmployees}</span>
             )}
           </p>
           <p className="account__text">
@@ -131,7 +150,7 @@ function Company({ id, handleLogout }) {
                 onChange={(e) => setDescription(e.target.value)}
               />
             ) : (
-              <span>{company.description}</span>
+              <span>{description || company.description}</span>
             )}
           </p>
           <p className="account__text">
@@ -143,7 +162,7 @@ function Company({ id, handleLogout }) {
                 onChange={(e) => setType(e.target.value)}
               />
             ) : (
-              <span>{company.type}</span>
+              <span>{type || company.type}</span>
             )}
           </p>
 
@@ -156,6 +175,13 @@ function Company({ id, handleLogout }) {
               Edit Company Info
             </Button>
           )}
+          <Button
+            variant="outlined"
+            startIcon={<DeleteIcon />}
+            onClick={() => handleRemove(company.id)}
+          >
+            DeleteCompany
+          </Button>
         </div>
       </Container>
     </>

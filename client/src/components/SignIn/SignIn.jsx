@@ -14,7 +14,7 @@ const SignIn = () => {
   const store = useSelector((state) => state);
 
   useEffect(() => {
-    if (!store.user.isAuth && store.user.isLoading) {
+    if (!store.user.isAuth) {
       navigate("/signin");
     } else {
       navigate("/");

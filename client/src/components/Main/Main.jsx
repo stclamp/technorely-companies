@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Header from "components/Header/Header";
 import TableCompanies from "./TableCompanies/TableCompanies";
 import AddCompany from "./AddCompany/AddCompany";
+import { getCompanies } from "store/slices/companySlice";
 import { useEffect } from "react";
 
 const Main = ({ handleLogout, id, setId, isRedirect, setIsRedirect }) => {
@@ -11,11 +12,14 @@ const Main = ({ handleLogout, id, setId, isRedirect, setIsRedirect }) => {
 
   const store = useSelector((state) => state);
 
-  console.log(!store.user.isAuth);
   useEffect(() => {
-    if (!store.user.isAuth && store.user.isLoading) {
+    if (!store.user.isAuth) {
       navigate("/signin");
+    } else if (store.user.isAuth) {
+      navigate("/");
     }
+
+    dispatch(getCompanies());
   }, []);
 
   return (
