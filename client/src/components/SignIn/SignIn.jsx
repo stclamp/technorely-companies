@@ -54,7 +54,6 @@ const SignIn = () => {
         <p></p>
       ) : (
         <>
-          <Header />
           <Container>
             <div className="signin__wrapper">
               <h2 className="signin__title">Sign In</h2>

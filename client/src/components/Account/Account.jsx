@@ -63,8 +63,6 @@ const Account = ({ handleLogout }) => {
 
   return (
     <>
-      <Header handleLogout={handleLogout} />
-
       <Container>
         <div className="account__wrapper">
           <h2>Account info</h2>

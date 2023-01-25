@@ -19,12 +19,13 @@ const Main = ({ handleLogout, id, setId, isRedirect, setIsRedirect }) => {
       navigate("/");
     }
 
+    console.log(store.user.isAuth);
+
     dispatch(getCompanies());
   }, []);
 
   return (
     <div>
-      <Header handleLogout={handleLogout} />
       <AddCompany />
       <TableCompanies
         id={id}

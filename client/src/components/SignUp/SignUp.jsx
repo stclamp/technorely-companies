@@ -57,7 +57,6 @@ const SignUp = ({ isAuth, isLoading }) => {
         <p></p>
       ) : (
         <>
-          <Header />
           <Container>
             <h2 className="sigup__title">Sign Up</h2>
             <form

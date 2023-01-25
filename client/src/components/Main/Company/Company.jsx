@@ -84,8 +84,6 @@ function Company({ id, handleLogout }) {
 
   return (
     <>
-      <Header handleLogout={handleLogout} />
-
       <Container>
         <div className="account__wrapper">
           <h2>Company info</h2>

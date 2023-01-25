@@ -79,9 +79,7 @@ const companySlice = createSlice({
     },
     [getCompanies.fulfilled]: (state, action) => {
       state.companies = action.payload;
-      console.log(action.payload);
       state.isLoading = false;
-      console.log(state);
       return state;
     },
     [createCompany.fulfilled]: (state, action) => {
@@ -99,7 +97,6 @@ const companySlice = createSlice({
         return state;
       }
       newCompanies[editIndex] = action.payload;
-      console.log(state.companies);
       return { ...state, companies: newCompanies };
     },
     [deleteCompany.fulfilled]: (state, action) => {
@@ -112,7 +109,6 @@ const companySlice = createSlice({
       }
 
       const deletedCompany = newCompanies.splice(removeIndex, 1);
-      console.log(state.companies);
       return { ...state, companies: deletedCompany };
     },
   },

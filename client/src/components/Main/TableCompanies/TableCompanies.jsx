@@ -41,30 +41,25 @@ const TableCompanies = () => {
             </TableHead>
             <TableBody>
               {filteredCompanies &&
-                filteredCompanies.map((row) =>
-                  store.company.isLoading ? (
-                    <p>Loading</p>
-                  ) : (
-                    <TableRow
-                      key={row.id}
-                      className="table__row"
-                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                      onClick={() => {
-                        getCompanyFromDb(row.id);
-                        // navigate(`/company/${row.id}`);
-                      }}
-                    >
-                      <TableCell component="th" scope="row">
-                        {row.name}
-                      </TableCell>
-                      <TableCell align="right">{row.adress}</TableCell>
-                      <TableCell align="right">{row.service}</TableCell>
-                      <TableCell align="right">{row.numOfEmployees}</TableCell>
-                      <TableCell align="right">{row.description}</TableCell>
-                      <TableCell align="right">{row.type}</TableCell>
-                    </TableRow>
-                  )
-                )}
+                filteredCompanies.map((row) => (
+                  <TableRow
+                    key={row.id}
+                    className="table__row"
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    onClick={() => {
+                      getCompanyFromDb(row.id);
+                    }}
+                  >
+                    <TableCell component="th" scope="row">
+                      {row.name}
+                    </TableCell>
+                    <TableCell align="right">{row.adress}</TableCell>
+                    <TableCell align="right">{row.service}</TableCell>
+                    <TableCell align="right">{row.numOfEmployees}</TableCell>
+                    <TableCell align="right">{row.description}</TableCell>
+                    <TableCell align="right">{row.type}</TableCell>
+                  </TableRow>
+                ))}
             </TableBody>
           </Table>
         </TableContainer>

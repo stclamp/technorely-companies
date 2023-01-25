@@ -11,6 +11,7 @@ import Main from "./components/Main/Main";
 import { useEffect } from "react";
 import Account from "components/Account/Account";
 import Company from "components/Main/Company/Company";
+import Header from "components/Header/Header";
 
 function App() {
   const dispatch = useDispatch();
@@ -33,6 +34,7 @@ function App() {
 
   return (
     <div className="App">
+      <Header handleLogout={handleLogout} />
       <Routes>
         <Route path="/" element={<Main handleLogout={handleLogout} />} />
         <Route path="/signin" element={<SignIn />} />
