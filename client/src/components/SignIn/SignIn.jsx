@@ -1,5 +1,4 @@
 import { TextField, Button, Container } from "@mui/material";
-import Header from "../Header/Header";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "api/index";
@@ -44,7 +43,7 @@ const SignIn = () => {
   };
 
   const handleLogin = () => {
-    setFormErrors(validate({ email, password }));
+    setFormErrors(validate(user));
     login(user)
       .then((data) => {
         dispatch(

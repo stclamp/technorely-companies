@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { ValidateIf } from 'class-validator';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
 

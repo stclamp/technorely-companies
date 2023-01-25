@@ -13,6 +13,8 @@ const AddCompany = () => {
   const [description, setDescription] = useState("");
   const [type, setType] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+  const [formErrors, setFormErrors] = useState({});
+  const [isSubmit, setIsSubmit] = useState(false);
 
   const dispatch = useDispatch();
   const store = useSelector((state) => state);
@@ -21,12 +23,59 @@ const AddCompany = () => {
     setIsOpen(true);
   };
 
+  const checkValidate = () => {
+    if (
+      formErrors.name === "" &&
+      formErrors.adress === "" &&
+      formErrors.service === "" &&
+      formErrors.numOfEmployees === "" &&
+      formErrors.description === "" &&
+      formErrors.type === ""
+    ) {
+      return true;
+    }
+  };
+
+  const validate = ({
+    name,
+    adress,
+    service,
+    numOfEmployees,
+    description,
+    type,
+  }) => {
+    const errors = {};
+    if (!name) {
+      errors.name = "Name is required!";
+    }
+    if (!adress) {
+      errors.adress = "Adress is required!";
+    }
+    if (!service) {
+      errors.service = "Service number is required!";
+    }
+    if (!numOfEmployees) {
+      errors.numOfEmployees = "Number Of Employees is required!";
+    }
+    if (!description) {
+      errors.description = "Description is required!";
+    }
+    if (!type) {
+      errors.type = "Type is required!";
+    }
+
+    return errors;
+  };
+
   const handleModalClose = () => {
     setIsOpen(false);
   };
 
   const handleCreateCompany = (e) => {
     e.preventDefault();
+    setFormErrors(
+      validate({ name, adress, service, numOfEmployees, description, type })
+    );
     if (
       !name.trim() &&
       !adress.trim() &&
@@ -37,25 +86,26 @@ const AddCompany = () => {
     ) {
       return;
     }
-    dispatch(
-      createCompany({
-        name: name,
-        adress: adress,
-        service: service,
-        numOfEmployees: numOfEmployees,
-        description: description,
-        type: type,
-        userId: store.user.id,
-      })
-    );
-
-    setName("");
-    setAdress("");
-    setService("");
-    setNumOfEmployees("");
-    setDescription("");
-    setType("");
-    handleModalClose();
+    if (isSubmit) {
+      dispatch(
+        createCompany({
+          name: name,
+          adress: adress,
+          service: service,
+          numOfEmployees: numOfEmployees,
+          description: description,
+          type: type,
+          userId: store.user.id,
+        })
+      );
+      setName("");
+      setAdress("");
+      setService("");
+      setNumOfEmployees("");
+      setDescription("");
+      setType("");
+      handleModalClose();
+    }
   };
 
   return (
@@ -78,6 +128,10 @@ const AddCompany = () => {
             handleCreateCompany={handleCreateCompany}
             isOpen={isOpen}
             handleModalClose={handleModalClose}
+            setIsSubmit={setIsSubmit}
+            checkValidate={checkValidate}
+            setFormErrors={setFormErrors}
+            formErrors={formErrors}
           />
           <Button
             className="add-company__btn"
