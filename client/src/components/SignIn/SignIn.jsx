@@ -9,6 +9,8 @@ import { useState, useEffect } from "react";
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [formErrors, setFormErrors] = useState({});
+  const [isValidUser, setIsValidUser] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const store = useSelector((state) => state);
@@ -26,7 +28,23 @@ const SignIn = () => {
     password,
   };
 
+  const validate = (user) => {
+    const errors = {};
+    const regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+    if (!user.email) {
+      errors.email = "Email is required!";
+    } else if (!regex.test(user.email)) {
+      errors.email = "Email must be correct!";
+    }
+    if (!user.password) {
+      errors.password = "Password is required!";
+    }
+
+    return errors;
+  };
+
   const handleLogin = () => {
+    setFormErrors(validate({ email, password }));
     login(user)
       .then((data) => {
         dispatch(
@@ -45,7 +63,7 @@ const SignIn = () => {
         );
         navigate("/");
       })
-      .catch((e) => alert("Invalid user"));
+      .catch((e) => setIsValidUser(true));
   };
 
   return (
@@ -65,19 +83,50 @@ const SignIn = () => {
                 }}
               >
                 <TextField
+                  className={formErrors.email ? "form-input__error" : null}
                   placeholder="Email"
                   type={"email"}
                   color="secondary"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    setFormErrors({ email: "", password: formErrors.password });
+                    setIsValidUser(false);
+                  }}
                 />
+                {formErrors.email && (
+                  <div>
+                    <span className="form-span__error">{formErrors.email}</span>
+                  </div>
+                )}
+
                 <TextField
+                  className={formErrors.password ? "form-input__error" : null}
                   placeholder="Password"
                   type={"password"}
                   color="secondary"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    setFormErrors({ email: formErrors.email, password: "" });
+                    setIsValidUser(false);
+                  }}
                 />
+                {formErrors.password && (
+                  <div>
+                    <span className="form-span__error">
+                      {formErrors.password}
+                    </span>
+                  </div>
+                )}
+
+                {isValidUser && !formErrors.email && !formErrors.password && (
+                  <div>
+                    <span className="form-span__error">
+                      Incorrect username or password
+                    </span>
+                  </div>
+                )}
                 <Button variant="contained" type="submit">
                   Sign In
                 </Button>
