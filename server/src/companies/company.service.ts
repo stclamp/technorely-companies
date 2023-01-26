@@ -17,6 +17,12 @@ export class CompanyService {
     });
   }
 
+  async sortBy(sort): Promise<Company[]> {
+    return await this.companyModel.findAll({
+      order: [sort],
+    });
+  }
+
   findOne(id: string): Promise<Company> {
     return this.companyModel.findOne({
       where: {

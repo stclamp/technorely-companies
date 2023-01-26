@@ -22,6 +22,10 @@ export class CompanyController {
   getAllCompanies() {
     return this.companyService.findAll();
   }
+  @Post('sort')
+  getSortedData(@Body('sort') sort: string) {
+    return this.companyService.sortBy(sort);
+  }
 
   @Get(':id')
   getOneCompany(@Param('id') id: string) {
