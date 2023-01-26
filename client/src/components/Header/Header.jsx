@@ -12,6 +12,7 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
+import logo from "assets/images/technorely.png";
 import "./Header.css";
 
 function Header({ handleLogout }) {
@@ -32,12 +33,20 @@ function Header({ handleLogout }) {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
-          <Typography variant="h6" noWrap>
-            <Link to="/" className="header__logo">
+          <Link
+            to="/"
+            className="header__logo"
+            style={{ display: "flex", alignItems: "center" }}
+          >
+            <img
+              src={logo}
+              alt="logo"
+              style={{ width: "40px", marginRight: "10px" }}
+            />
+            <Typography variant="h6" noWrap>
               Technorely
-            </Link>
-          </Typography>
+            </Typography>
+          </Link>
           {user.isAuth && (
             <>
               <Box

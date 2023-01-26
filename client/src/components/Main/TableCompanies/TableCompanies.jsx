@@ -8,7 +8,7 @@ import Paper from "@mui/material/Paper";
 import { Container } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import "./TableCompanies.css";
-import { getCompany } from "store/slices/companySlice";
+import { getCompany, sortBy } from "store/slices/companySlice";
 import { useNavigate } from "react-router-dom";
 
 const TableCompanies = () => {
@@ -24,6 +24,10 @@ const TableCompanies = () => {
     (item) => +item.userId === +store.user.id
   );
 
+  const sortByField = (sort) => {
+    dispatch(sortBy(sort));
+  };
+
   return (
     <>
       <Container>
@@ -31,9 +35,24 @@ const TableCompanies = () => {
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell>Company Name</TableCell>
+                <TableCell
+                  className="table__sortable"
+                  onClick={() => {
+                    sortByField("name");
+                  }}
+                >
+                  Company Name
+                </TableCell>
                 <TableCell align="right">Company Adress</TableCell>
-                <TableCell align="right">Service</TableCell>
+                <TableCell
+                  align="right"
+                  className="table__sortable"
+                  onClick={() => {
+                    sortByField("service");
+                  }}
+                >
+                  Service
+                </TableCell>
                 <TableCell align="right">Number of employees</TableCell>
                 <TableCell align="right">Description</TableCell>
                 <TableCell align="right">Type</TableCell>

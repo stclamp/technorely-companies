@@ -6,3 +6,29 @@
 .table__row:hover {
   background-color: rgba(0, 0, 0, 0.1);
 }
+
+.table__sortable {
+  cursor: pointer;
+  position: relative;
+}
+
+.table__sortable::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0;
+  visibility: hidden;
+  width: 12px;
+  height: 12px;
+  background-image: url("assets/images/sorting.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  transition: 0.2s ease;
+}
+
+.table__sortable:hover::after {
+  opacity: 1;
+  visibility: visible;
+}

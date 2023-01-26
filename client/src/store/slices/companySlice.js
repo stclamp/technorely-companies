@@ -52,6 +52,19 @@ export const deleteCompany = createAsyncThunk(
   }
 );
 
+export const sortBy = createAsyncThunk("company/sortBy", async function (sort) {
+  const res = await axios.post(
+    "http://localhost:3000/companies/sort",
+    { sort: sort },
+
+    {
+      withCredentials: true,
+    }
+  );
+
+  return res.data;
+});
+
 const companySlice = createSlice({
   name: "company",
   initialState: {
@@ -110,6 +123,9 @@ const companySlice = createSlice({
 
       const deletedCompany = newCompanies.splice(removeIndex, 1);
       return { ...state, companies: deletedCompany };
+    },
+    [sortBy.fulfilled]: (state, action) => {
+      state.companies = action.payload;
     },
   },
 });
