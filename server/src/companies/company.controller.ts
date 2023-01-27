@@ -23,8 +23,12 @@ export class CompanyController {
     return this.companyService.findAll(userId);
   }
   @Post('sort')
-  getSortedData(@Body('sort') sort: string, @Body('userId') userId: string) {
-    return this.companyService.sortBy(sort, userId);
+  getSortedData(
+    @Body('sort') sort: string,
+    @Body('userId') userId: string,
+    @Body('method') method: string,
+  ) {
+    return this.companyService.sortBy(sort, userId, method);
   }
 
   @Get(':id')

@@ -10,19 +10,30 @@ import { useDispatch, useSelector } from "react-redux";
 import "./TableCompanies.css";
 import { getCompany, sortBy } from "store/slices/companySlice";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const TableCompanies = () => {
   const store = useSelector((state) => state);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [isAsc, setIsAsc] = useState(false);
+  const [method, setMethod] = useState("ASC");
 
   const getCompanyFromDb = (id) => {
     dispatch(getCompany(id));
     navigate(`/company/${id}`);
   };
 
-  const sortByField = (sort) => {
-    dispatch(sortBy({ sort: sort, userId: String(store.user.id) }));
+  const sortByField = (sort, method) => {
+    setIsAsc(!isAsc);
+    if (isAsc) {
+      setMethod("ASC");
+    } else {
+      setMethod("DESC");
+    }
+    dispatch(
+      sortBy({ sort: sort, userId: String(store.user.id), method: method })
+    );
   };
 
   return (
@@ -35,7 +46,7 @@ const TableCompanies = () => {
                 <TableCell
                   className="table__sortable"
                   onClick={() => {
-                    sortByField("name");
+                    sortByField("name", method);
                   }}
                 >
                   Company Name
@@ -45,7 +56,7 @@ const TableCompanies = () => {
                   align="right"
                   className="table__sortable"
                   onClick={() => {
-                    sortByField("service");
+                    sortByField("service", method);
                   }}
                 >
                   Service
