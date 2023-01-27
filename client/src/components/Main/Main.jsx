@@ -6,7 +6,7 @@ import AddCompany from "./AddCompany/AddCompany";
 import { getCompanies } from "store/slices/companySlice";
 import { useEffect } from "react";
 
-const Main = ({ handleLogout, id, setId, isRedirect, setIsRedirect }) => {
+const Main = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -24,12 +24,7 @@ const Main = ({ handleLogout, id, setId, isRedirect, setIsRedirect }) => {
   return (
     <div>
       <AddCompany />
-      <TableCompanies
-        id={id}
-        setId={setId}
-        isRedirect={isRedirect}
-        setIsRedirect={setIsRedirect}
-      />
+      <TableCompanies />
     </div>
   );
 };

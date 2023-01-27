@@ -11,7 +11,6 @@
 .modal__form {
   position: absolute;
   width: 70%;
-  height: 70%;
   transform: translate(-50%, -50%);
   left: 50%;
   top: 50%;
@@ -23,7 +22,6 @@
 }
 
 .modal__add-company-btn {
-  margin-top: 40px !important;
   padding: 15px 0 !important;
 }
 
@@ -34,8 +32,8 @@
 .modal__close {
   width: 30px;
   position: absolute;
-  right: 30px;
-  top: 30px;
+  right: 20px;
+  top: 20px;
 }
 
 .modal__close {

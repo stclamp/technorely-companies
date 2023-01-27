@@ -75,7 +75,7 @@ const SignUp = () => {
   return (
     <>
       <Container>
-        <h2 className="sigup__title">Sign Up</h2>
+        <h2 className="sigup__title">SIGN UP</h2>
         <Formik
           initialValues={{
             email: "",

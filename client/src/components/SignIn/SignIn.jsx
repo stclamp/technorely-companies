@@ -55,7 +55,7 @@ const SignIn = () => {
     <>
       <Container>
         <div className="signin__wrapper">
-          <h2 className="signin__title">Sign In</h2>
+          <h2 className="signin__title">SIGN IN</h2>
           <Formik
             initialValues={{
               email: "",
@@ -125,7 +125,7 @@ const SignIn = () => {
                     {store.user.isLoading ? "Loading" : "Sign In"}
                   </Button>
                   <span className="no_account">Don't have an account? </span>
-                  <Link to="/signup">Register now</Link>
+                  <Link to="/signup">Sign up now</Link>
                 </form>
               );
             }}

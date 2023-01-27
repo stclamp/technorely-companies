@@ -19,6 +19,7 @@ function App() {
   const store = useSelector((state) => state);
   const location = useLocation();
   const id = location.pathname.split("/")[2];
+
   const handleLogout = () => {
     logout();
     dispatch(removeUser());
@@ -29,23 +30,19 @@ function App() {
     if (localStorage.getItem("email")) {
       dispatch(getUser());
     }
-    // dispatch(getCompanies(store.user.id + ""));
   }, [dispatch]);
 
   return (
     <div className="App">
       <Header handleLogout={handleLogout} />
       <Routes>
-        <Route path="/" element={<Main handleLogout={handleLogout} />} />
+        <Route path="/" element={<Main />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route
-          path="/account"
-          element={<Account handleLogout={handleLogout} />}
-        />
+        <Route path="/account" element={<Account />} />
         <Route
           path={`/company/${id || store.company.company.id}`}
-          element={<Company id={id} handleLogout={handleLogout} />}
+          element={<Company id={id || store.company.company.id} />}
         />
       </Routes>
     </div>

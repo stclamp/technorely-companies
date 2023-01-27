@@ -17,14 +17,12 @@ function Company({ id, handleLogout }) {
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
   const [isEditable, setIsEditable] = useState(false);
-  const [name, setName] = useState(company.name || "");
-  const [adress, setAdress] = useState(company.adress || "");
-  const [service, setService] = useState(company.service || "");
-  const [numOfEmployees, setNumOfEmployees] = useState(
-    company.numOfEmployees || ""
-  );
-  const [description, setDescription] = useState(company.description || "");
-  const [type, setType] = useState(company.type || "");
+  const [name, setName] = useState(company.name);
+  const [adress, setAdress] = useState(company.adress);
+  const [service, setService] = useState(company.service);
+  const [numOfEmployees, setNumOfEmployees] = useState(company.numOfEmployees);
+  const [description, setDescription] = useState(company.description);
+  const [type, setType] = useState(company.type);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -32,14 +30,26 @@ function Company({ id, handleLogout }) {
       navigate("/signin");
     }
     dispatch(getCompany(id));
-  }, []);
+    setName(company.name);
+    setAdress(company.adress);
+    setService(company.service);
+    setNumOfEmployees(company.numOfEmployees);
+    setDescription(company.description);
+    setType(company.type);
+  }, [
+    company.name,
+    company.adress,
+    company.service,
+    company.numOfEmployees,
+    company.description,
+    company.type,
+  ]);
 
   const handleRemove = (id) => {
     const answer = window.confirm("Are yoy sure?");
     if (answer) {
       dispatch(deleteCompany(id));
       dispatch(removeCompany());
-      dispatch(getCompanies());
       navigate("/");
     }
   };
@@ -98,7 +108,7 @@ function Company({ id, handleLogout }) {
                 }}
               />
             ) : (
-              <span>{name || company.name}</span>
+              <span>{name}</span>
             )}
           </p>
           <p className="account__text">
@@ -110,7 +120,7 @@ function Company({ id, handleLogout }) {
                 onChange={(e) => setAdress(e.target.value)}
               />
             ) : (
-              <span>{adress || company.adress}</span>
+              <span>{adress}</span>
             )}
           </p>
           <p className="account__text">
@@ -122,7 +132,7 @@ function Company({ id, handleLogout }) {
                 onChange={(e) => setService(e.target.value)}
               />
             ) : (
-              <span>{service || company.service}</span>
+              <span>{service}</span>
             )}
           </p>
           <p className="account__text">
@@ -136,7 +146,7 @@ function Company({ id, handleLogout }) {
                 }}
               />
             ) : (
-              <span>{numOfEmployees || company.numOfEmployees}</span>
+              <span>{numOfEmployees}</span>
             )}
           </p>
           <p className="account__text">
@@ -148,7 +158,7 @@ function Company({ id, handleLogout }) {
                 onChange={(e) => setDescription(e.target.value)}
               />
             ) : (
-              <span>{description || company.description}</span>
+              <span>{description}</span>
             )}
           </p>
           <p className="account__text">
@@ -160,7 +170,7 @@ function Company({ id, handleLogout }) {
                 onChange={(e) => setType(e.target.value)}
               />
             ) : (
-              <span>{type || company.type}</span>
+              <span>{type}</span>
             )}
           </p>
 
@@ -175,6 +185,7 @@ function Company({ id, handleLogout }) {
           )}
           <Button
             variant="outlined"
+            color="error"
             startIcon={<DeleteIcon />}
             onClick={() => handleRemove(company.id)}
           >

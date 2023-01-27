@@ -47,7 +47,7 @@ function Header({ handleLogout }) {
               Technorely
             </Typography>
           </Link>
-          {user.isAuth && (
+          {user.isAuth ? (
             <>
               <Box
                 sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}
@@ -103,6 +103,26 @@ function Header({ handleLogout }) {
                   </MenuItem>
                 </Menu>
               </Box>
+            </>
+          ) : (
+            <>
+              <Box
+                sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}
+              ></Box>
+              <MenuItem>
+                <Typography textAlign="center">
+                  <Link className="header__link" to="/signin">
+                    Sign In
+                  </Link>
+                </Typography>
+              </MenuItem>
+              <MenuItem>
+                <Typography textAlign="center">
+                  <Link className="header__link" to="/signup">
+                    Sign Up
+                  </Link>
+                </Typography>
+              </MenuItem>
             </>
           )}
         </Toolbar>

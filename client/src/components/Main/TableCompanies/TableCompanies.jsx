@@ -8,7 +8,7 @@ import Paper from "@mui/material/Paper";
 import { Container } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import "./TableCompanies.css";
-import { getCompany, sortBy } from "store/slices/companySlice";
+import { getCompany, sortBy, setCompany } from "store/slices/companySlice";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
@@ -19,8 +19,26 @@ const TableCompanies = () => {
   const [isAsc, setIsAsc] = useState(false);
   const [method, setMethod] = useState("ASC");
 
-  const getCompanyFromDb = (id) => {
-    dispatch(getCompany(id));
+  const getCompanyFromDb = (
+    id,
+    name,
+    adress,
+    service,
+    numOfEmployees,
+    description,
+    type
+  ) => {
+    dispatch(
+      setCompany({
+        name,
+        adress,
+        service,
+        numOfEmployees,
+        description,
+        type,
+        userId: store.user.id,
+      })
+    );
     navigate(`/company/${id}`);
   };
 
@@ -74,7 +92,15 @@ const TableCompanies = () => {
                     className="table__row"
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                     onClick={() => {
-                      getCompanyFromDb(row.id);
+                      getCompanyFromDb(
+                        row.id,
+                        row.name,
+                        row.adress,
+                        row.service,
+                        row.numOfEmployees,
+                        row.description,
+                        row.type
+                      );
                     }}
                   >
                     <TableCell component="th" scope="row">

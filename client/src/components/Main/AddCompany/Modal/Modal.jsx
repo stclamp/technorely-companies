@@ -52,7 +52,6 @@ const Modal = ({
                   <TextField
                     className="modal__input"
                     label="Company name"
-                    variant="standard"
                     color="secondary"
                     value={values.name}
                     onChange={handleChange("name")}
@@ -66,7 +65,6 @@ const Modal = ({
                   <TextField
                     className="modal__input"
                     label="Company adress"
-                    variant="standard"
                     color="secondary"
                     value={values.adress}
                     onChange={handleChange("adress")}
@@ -80,7 +78,6 @@ const Modal = ({
                   <TextField
                     className="modal__input"
                     label="Service of activity"
-                    variant="standard"
                     color="secondary"
                     value={values.service}
                     onChange={handleChange("service")}
@@ -94,7 +91,6 @@ const Modal = ({
                   <TextField
                     className="modal__input"
                     label="Numbers of employees"
-                    variant="standard"
                     color="secondary"
                     value={values.numOfEmployees}
                     onChange={handleChange("numOfEmployees")}
@@ -110,7 +106,6 @@ const Modal = ({
                   <TextField
                     className="modal__input"
                     label="Description"
-                    variant="standard"
                     color="secondary"
                     value={values.description}
                     onChange={handleChange("description")}
@@ -126,7 +121,6 @@ const Modal = ({
                   <TextField
                     className="modal__input"
                     label="Type"
-                    variant="standard"
                     color="secondary"
                     value={values.type}
                     onChange={handleChange("type")}

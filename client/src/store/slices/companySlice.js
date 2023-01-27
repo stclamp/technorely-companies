@@ -74,13 +74,13 @@ const companySlice = createSlice({
   },
   reducers: {
     setCompany(state, action) {
-      state.createCompany.name = action.payload.name;
-      state.createCompany.adress = action.payload.adress;
-      state.createCompany.service = action.payload.service;
-      state.createCompany.numOfEmployees = action.numOfEmployees;
-      state.createCompany.description = action.description;
-      state.createCompany.type = action.payload.type;
-      state.createCompany.userId = action.payload.userId;
+      state.company.name = action.payload.name;
+      state.company.adress = action.payload.adress;
+      state.company.service = action.payload.service;
+      state.company.numOfEmployees = action.numOfEmployees;
+      state.company.description = action.description;
+      state.company.type = action.payload.type;
+      state.company.userId = action.payload.userId;
     },
     removeCompany(state) {
       state.company = {};
@@ -122,7 +122,7 @@ const companySlice = createSlice({
       }
 
       const deletedCompany = newCompanies.splice(removeIndex, 1);
-      return { ...state, companies: deletedCompany };
+      return { ...state, companies: deletedCompany, company: {} };
     },
     [sortBy.fulfilled]: (state, action) => {
       state.companies = action.payload;

@@ -40,7 +40,10 @@
 }
 
 .form-span__error {
+  display: block;
   color: red;
+  margin-bottom: 15px;
+  margin-top: -5px;
 }
 
 .form-input__error input {
