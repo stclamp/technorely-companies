@@ -3,10 +3,11 @@ import axios from "axios";
 
 export const getCompanies = createAsyncThunk(
   "company/getCompanies",
-  async function () {
-    const res = await axios.get("http://localhost:3000/companies", {
-      withCredentials: true,
+  async function (userId) {
+    const res = await axios.post("http://localhost:3000/companies", {
+      userId: userId,
     });
+    console.log(res.data);
     return res.data;
   }
 );
@@ -52,18 +53,17 @@ export const deleteCompany = createAsyncThunk(
   }
 );
 
-export const sortBy = createAsyncThunk("company/sortBy", async function (sort) {
-  const res = await axios.post(
-    "http://localhost:3000/companies/sort",
-    { sort: sort },
+export const sortBy = createAsyncThunk(
+  "company/sortBy",
+  async function (sortBy) {
+    const res = await axios.post(
+      "http://localhost:3000/companies/sort",
+      sortBy
+    );
 
-    {
-      withCredentials: true,
-    }
-  );
-
-  return res.data;
-});
+    return res.data;
+  }
+);
 
 const companySlice = createSlice({
   name: "company",

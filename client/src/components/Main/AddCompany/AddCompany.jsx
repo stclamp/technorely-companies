@@ -47,7 +47,7 @@ const AddCompany = () => {
         numOfEmployees: values.numOfEmployees,
         description: values.description,
         type: values.type,
-        userId: store.user.id,
+        userId: store.user.id + "",
       })
     );
     setIsOpen(false);

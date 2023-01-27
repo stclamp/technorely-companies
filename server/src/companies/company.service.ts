@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
+import { where } from 'sequelize';
 import { ChangeCompany } from './dto/change-company.dto';
 import { CreateCompany } from './dto/create-company.dto';
 import { Company } from './models/company.model';
@@ -11,14 +12,16 @@ export class CompanyService {
     private companyModel: typeof Company,
   ) {}
 
-  async findAll(): Promise<Company[]> {
+  async findAll(userId: string): Promise<Company[]> {
     return await this.companyModel.findAll({
+      where: { userId: userId },
       order: ['id'],
     });
   }
 
-  async sortBy(sort): Promise<Company[]> {
+  async sortBy(sort: string, userId: string): Promise<Company[]> {
     return await this.companyModel.findAll({
+      where: { userId: userId },
       order: [sort],
     });
   }

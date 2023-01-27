@@ -29,7 +29,7 @@ function App() {
     if (localStorage.getItem("email")) {
       dispatch(getUser());
     }
-    dispatch(getCompanies());
+    // dispatch(getCompanies(store.user.id + ""));
   }, [dispatch]);
 
   return (

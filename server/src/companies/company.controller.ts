@@ -18,13 +18,13 @@ import { CreateCompany } from './dto/create-company.dto';
 export class CompanyController {
   constructor(private readonly companyService: CompanyService) {}
 
-  @Get()
-  getAllCompanies() {
-    return this.companyService.findAll();
+  @Post()
+  getAllCompanies(@Body('userId') userId: string) {
+    return this.companyService.findAll(userId);
   }
   @Post('sort')
-  getSortedData(@Body('sort') sort: string) {
-    return this.companyService.sortBy(sort);
+  getSortedData(@Body('sort') sort: string, @Body('userId') userId: string) {
+    return this.companyService.sortBy(sort, userId);
   }
 
   @Get(':id')

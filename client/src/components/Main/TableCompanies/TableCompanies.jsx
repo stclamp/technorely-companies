@@ -20,12 +20,9 @@ const TableCompanies = () => {
     dispatch(getCompany(id));
     navigate(`/company/${id}`);
   };
-  const filteredCompanies = store.company.companies.filter(
-    (item) => +item.userId === +store.user.id
-  );
 
   const sortByField = (sort) => {
-    dispatch(sortBy(sort));
+    dispatch(sortBy({ sort: sort, userId: String(store.user.id) }));
   };
 
   return (
@@ -59,8 +56,8 @@ const TableCompanies = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {filteredCompanies &&
-                filteredCompanies.map((row) => (
+              {store.company.companies &&
+                store.company.companies.map((row) => (
                   <TableRow
                     key={row.id}
                     className="table__row"

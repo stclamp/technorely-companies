@@ -18,11 +18,8 @@ const Main = ({ handleLogout, id, setId, isRedirect, setIsRedirect }) => {
     } else if (store.user.isAuth) {
       navigate("/");
     }
-
-    console.log(store.user.isAuth);
-
-    dispatch(getCompanies());
-  }, []);
+    dispatch(getCompanies(store.user.id + ""));
+  }, [store.user]);
 
   return (
     <div>
