@@ -48,7 +48,6 @@ export class CompanyService {
     company.description = createCompany.description;
     company.type = createCompany.type;
     company.userId = createCompany.userId;
-
     return company.save();
   }
 

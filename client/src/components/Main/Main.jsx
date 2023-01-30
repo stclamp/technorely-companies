@@ -1,6 +1,5 @@
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import Header from "components/Header/Header";
 import TableCompanies from "./TableCompanies/TableCompanies";
 import AddCompany from "./AddCompany/AddCompany";
 import { getCompanies } from "store/slices/companySlice";

@@ -29,7 +29,7 @@ const Modal = ({
               type: "",
             }}
             onSubmit={(values, errors) => {
-              handleCreateCompany(values, errors);
+              handleCreateCompany(values);
             }}
             validationSchema={validationSchema}
           >

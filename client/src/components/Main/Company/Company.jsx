@@ -1,4 +1,3 @@
-import Header from "components/Header/Header";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -7,7 +6,6 @@ import {
   getCompany,
   deleteCompany,
   removeCompany,
-  getCompanies,
 } from "store/slices/companySlice";
 import { Button, Container } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";

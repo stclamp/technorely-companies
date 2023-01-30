@@ -18,7 +18,7 @@ import { CreateCompany } from './dto/create-company.dto';
 export class CompanyController {
   constructor(private readonly companyService: CompanyService) {}
 
-  @Post()
+  @Post('all')
   getAllCompanies(@Body('userId') userId: string) {
     return this.companyService.findAll(userId);
   }

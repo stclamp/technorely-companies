@@ -41,12 +41,7 @@ const AddCompany = () => {
   const handleCreateCompany = (values) => {
     dispatch(
       createCompany({
-        name: values.name,
-        adress: values.adress,
-        service: values.service,
-        numOfEmployees: values.numOfEmployees,
-        description: values.description,
-        type: values.type,
+        ...values,
         userId: store.user.id + "",
       })
     );

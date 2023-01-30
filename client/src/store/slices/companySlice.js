@@ -4,10 +4,9 @@ import axios from "axios";
 export const getCompanies = createAsyncThunk(
   "company/getCompanies",
   async function (userId) {
-    const res = await axios.post("http://localhost:3000/companies", {
+    const res = await axios.post("http://localhost:3000/companies/all", {
       userId: userId,
     });
-    console.log(res.data);
     return res.data;
   }
 );
@@ -29,7 +28,6 @@ export const createCompany = createAsyncThunk(
     const res = await axios.post("http://localhost:3000/companies", company, {
       withCredentials: true,
     });
-
     return res.data;
   }
 );
