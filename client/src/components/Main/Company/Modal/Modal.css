@@ -1,0 +1,24 @@
+.modal__wrapper {
+  background-color: rgba(0, 0, 0, 0.3);
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.modal {
+  position: absolute;
+  padding: 40px 100px;
+  border-radius: 5px;
+  left: 50%;
+  top: 20%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+}
+
+.accept {
+  font-size: 25px;
+}
+
+.modal__yes {
+  margin-right: 20px !important;
+}

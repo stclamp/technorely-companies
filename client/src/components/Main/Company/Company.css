@@ -20,13 +20,8 @@
 .account__wrapper .css-1u3bzj6-MuiFormControl-root-MuiTextField-root {
   display: block !important;
   margin-top: 9px !important;
-  margin-bottom: 15px !important;
 }
 
 .account__save {
-  margin-right: 15px !important;
-}
-
-.account__save ~ button {
   margin-bottom: 15px !important;
 }

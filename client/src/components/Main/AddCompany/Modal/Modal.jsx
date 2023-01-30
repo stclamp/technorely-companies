@@ -15,7 +15,7 @@ const Modal = ({
           className="modal__wrapper"
           onClick={(e) => {
             if (e.target.classList.contains("modal__wrapper")) {
-              handleModalClose();
+              // handleModalClose();
             }
           }}
         >

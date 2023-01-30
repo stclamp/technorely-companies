@@ -4,23 +4,23 @@ import { useNavigate } from "react-router-dom";
 import {
   editCompany,
   getCompany,
+  getCompanies,
   deleteCompany,
   removeCompany,
 } from "store/slices/companySlice";
-import { Button, Container } from "@mui/material";
+import { Button, Container, TextField } from "@mui/material";
+import Modal from "./Modal/Modal";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { Formik } from "formik";
+import * as Yup from "yup";
+import "./Company.css";
 
-function Company({ id, handleLogout }) {
+function Company({ id }) {
   const company = useSelector((state) => state.company.company);
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
   const [isEditable, setIsEditable] = useState(false);
-  const [name, setName] = useState(company.name);
-  const [adress, setAdress] = useState(company.adress);
-  const [service, setService] = useState(company.service);
-  const [numOfEmployees, setNumOfEmployees] = useState(company.numOfEmployees);
-  const [description, setDescription] = useState(company.description);
-  const [type, setType] = useState(company.type);
+  const [isOpen, setIsOpen] = useState(false);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -28,167 +28,252 @@ function Company({ id, handleLogout }) {
       navigate("/signin");
     }
     dispatch(getCompany(id));
-    setName(company.name);
-    setAdress(company.adress);
-    setService(company.service);
-    setNumOfEmployees(company.numOfEmployees);
-    setDescription(company.description);
-    setType(company.type);
-  }, [
-    company.name,
-    company.adress,
-    company.service,
-    company.numOfEmployees,
-    company.description,
-    company.type,
-  ]);
+    console.log(user.id);
+    dispatch(getCompanies(user.id + ""));
+  }, [user]);
+
+  const validationSchema = Yup.object().shape({
+    name: Yup.string()
+      .required("Name is required")
+      .min(2, "Name too short! Must be at least 2 characters."),
+    adress: Yup.string()
+      .required("Adress is required")
+      .min(2, "Adress too short! Must be at least 2 characters."),
+    service: Yup.string()
+      .required("Service is required")
+      .min(2, "Service too short! Must be at least 2 characters"),
+    numOfEmployees: Yup.string().required("Number of employees is required"),
+    description: Yup.string()
+      .required("Description is required")
+      .min(2, "Description too short! Must be at least 2 characters"),
+    type: Yup.string()
+      .required("Type is required")
+      .min(2, "Type too short! Must be at least 2 characters"),
+  });
 
   const handleRemove = (id) => {
-    const answer = window.confirm("Are yoy sure?");
-    if (answer) {
-      dispatch(deleteCompany(id));
-      dispatch(removeCompany());
-      navigate("/");
-    }
+    dispatch(deleteCompany(id));
+    dispatch(removeCompany());
+    navigate("/");
+  };
+
+  const handleOpenModal = () => {
+    setIsOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsOpen(false);
   };
 
   const handleEdit = () => {
     setIsEditable(true);
-    setName(company.name);
-    setAdress(company.adress);
-    setService(company.service);
-    setNumOfEmployees(company.numOfEmployees);
-    setDescription(company.description);
-    setType(company.type);
   };
 
-  const handleSave = () => {
-    if (
-      !name.trim() ||
-      !adress.trim() ||
-      !service.trim() ||
-      !numOfEmployees.trim() ||
-      !description.trim() ||
-      !type.trim()
-    ) {
-      alert("Input corret data");
-      setIsEditable(true);
-    } else {
-      setIsEditable(false);
-      dispatch(
-        editCompany({
-          id: company.id,
-          name,
-          adress,
-          service,
-          numOfEmployees,
-          description,
-          type,
-          userId: company.userId,
-        })
-      );
-    }
+  const handleSave = (values) => {
+    setIsEditable(false);
+    dispatch(
+      editCompany({
+        ...values,
+        id: company.id,
+        userId: company.userId,
+      }),
+      getCompany(id)
+    );
   };
 
   return (
     <>
       <Container>
         <div className="account__wrapper">
-          <h2>Company info</h2>
-          <p className="account__text">
-            Company name:
-            {isEditable ? (
-              <input
-                type="text"
-                value={name}
-                onChange={(e) => {
-                  setName(e.target.value);
-                }}
-              />
-            ) : (
-              <span>{name}</span>
-            )}
-          </p>
-          <p className="account__text">
-            Company adress:
-            {isEditable ? (
-              <input
-                type="text"
-                value={adress}
-                onChange={(e) => setAdress(e.target.value)}
-              />
-            ) : (
-              <span>{adress}</span>
-            )}
-          </p>
-          <p className="account__text">
-            Company service:
-            {isEditable ? (
-              <input
-                type="text"
-                value={service}
-                onChange={(e) => setService(e.target.value)}
-              />
-            ) : (
-              <span>{service}</span>
-            )}
-          </p>
-          <p className="account__text">
-            Company number of emplyees:
-            {isEditable ? (
-              <input
-                type="text"
-                value={numOfEmployees}
-                onChange={(e) => {
-                  setNumOfEmployees(e.target.value);
-                }}
-              />
-            ) : (
-              <span>{numOfEmployees}</span>
-            )}
-          </p>
-          <p className="account__text">
-            Company description:
-            {isEditable ? (
-              <input
-                type="text"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-              />
-            ) : (
-              <span>{description}</span>
-            )}
-          </p>
-          <p className="account__text">
-            Company type:
-            {isEditable ? (
-              <input
-                type="text"
-                value={type}
-                onChange={(e) => setType(e.target.value)}
-              />
-            ) : (
-              <span>{type}</span>
-            )}
-          </p>
-
-          {isEditable ? (
-            <Button variant="contained" onClick={handleSave}>
-              Save Company Info
-            </Button>
+          <h2 className="account__title">Company info</h2>
+          {!isEditable ? (
+            <>
+              <p className="account__text">
+                Company name:
+                <span className="text">{company.name}</span>
+              </p>
+              <p className="account__text">
+                Company adress:
+                <span className="text">{company.adress}</span>
+              </p>
+              <p className="account__text">
+                Company service:
+                <span className="text">{company.service}</span>
+              </p>
+              <p className="account__text">
+                Your numOfEmployees:
+                <span className="text">{company.numOfEmployees}</span>
+              </p>
+              <p className="account__text">
+                Your description:
+                <span className="text">{company.description}</span>
+              </p>
+              <p className="account__text">
+                Your type:
+                <span className="text">{company.type}</span>
+              </p>
+              <Button
+                className="account__save"
+                variant="contained"
+                onClick={handleEdit}
+              >
+                Edit Company Info
+              </Button>
+            </>
           ) : (
-            <Button variant="contained" onClick={handleEdit}>
-              Edit Company Info
-            </Button>
+            <Formik
+              initialValues={{
+                name: company.name,
+                adress: company.adress,
+                service: company.service,
+                numOfEmployees: company.numOfEmployees,
+                description: company.description,
+                type: company.type,
+              }}
+              onSubmit={(values, errors) => {
+                handleSave(values, errors);
+              }}
+              validationSchema={validationSchema}
+            >
+              {({
+                values,
+                errors,
+                touched,
+                handleSubmit,
+                handleChange,
+                handleBlur,
+              }) => {
+                return (
+                  <form onSubmit={handleSubmit}>
+                    <div className="account__text">
+                      Company name:
+                      <TextField
+                        color="secondary"
+                        className="account__input"
+                        value={values.name}
+                        onChange={handleChange("name")}
+                        onBlur={handleBlur("name")}
+                      />
+                      {touched.name && errors.name && (
+                        <div>
+                          <span className="form-span__error--small">
+                            {errors.name}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                    <div className="account__text">
+                      Company adress:
+                      <TextField
+                        color="secondary"
+                        className="account__input"
+                        value={values.adress}
+                        onChange={handleChange("adress")}
+                        onBlur={handleBlur("adress")}
+                      />
+                      {touched.adress && errors.adress && (
+                        <div>
+                          <span className="form-span__error--small">
+                            {errors.adress}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                    <div className="account__text">
+                      Company service:
+                      <TextField
+                        color="secondary"
+                        className="account__input"
+                        value={values.service}
+                        onChange={handleChange("service")}
+                        onBlur={handleBlur("service")}
+                      />
+                      {touched.service && errors.service && (
+                        <div>
+                          <span className="form-span__error--small">
+                            {errors.service}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                    <div className="account__text">
+                      Company number of employees:
+                      <TextField
+                        color="secondary"
+                        className="account__input"
+                        value={values.numOfEmployees}
+                        onChange={handleChange("numOfEmployees")}
+                        onBlur={handleBlur("numOfEmployees")}
+                      />
+                      {touched.numOfEmployees && errors.numOfEmployees && (
+                        <div>
+                          <span className="form-span__error--small">
+                            {errors.numOfEmployees}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                    <div className="account__text">
+                      Company description:
+                      <TextField
+                        color="secondary"
+                        className="account__input"
+                        value={values.description}
+                        onChange={handleChange("description")}
+                        onBlur={handleBlur("description")}
+                      />
+                      {touched.description && errors.description && (
+                        <div>
+                          <span className="form-span__error--small">
+                            {errors.description}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                    <div className="account__text">
+                      Company type:
+                      <TextField
+                        color="secondary"
+                        className="account__input"
+                        value={values.type}
+                        onChange={handleChange("type")}
+                        onBlur={handleBlur("type")}
+                      />
+                      {touched.type && errors.type && (
+                        <div>
+                          <span className="form-span__error--small">
+                            {errors.type}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                    <Button
+                      type="submit"
+                      className="account__save"
+                      variant="contained"
+                    >
+                      Save Company Info
+                    </Button>
+                  </form>
+                );
+              }}
+            </Formik>
           )}
+
           <Button
             variant="outlined"
             color="error"
             startIcon={<DeleteIcon />}
-            onClick={() => handleRemove(company.id)}
+            onClick={() => handleOpenModal()}
           >
             DeleteCompany
           </Button>
+          <Modal
+            isOpen={isOpen}
+            handleRemove={handleRemove}
+            id={company.id}
+            handleCloseModal={handleCloseModal}
+          />
         </div>
       </Container>
     </>

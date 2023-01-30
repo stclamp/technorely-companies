@@ -125,18 +125,18 @@ const TableCompanies = () => {
                   ))}
             </TableBody>
           </Table>
+          {store.company.companies.length > 0 && (
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25]}
+              component="div"
+              count={store.company.companies.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+          )}
         </TableContainer>
-        {store.company.companies.length > 0 && (
-          <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
-            component="div"
-            count={store.company.companies.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
-        )}
       </Container>
     </>
   );

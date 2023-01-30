@@ -7,6 +7,7 @@ export const getCompanies = createAsyncThunk(
     const res = await axios.post("http://localhost:3000/companies/all", {
       userId: userId,
     });
+    console.log(res.data);
     return res.data;
   }
 );
@@ -101,6 +102,7 @@ const companySlice = createSlice({
     },
     [editCompany.fulfilled]: (state, action) => {
       const newCompanies = [...state.companies];
+
       const editIndex = newCompanies.findIndex(
         (company) => company.id === action.payload.id
       );
@@ -108,7 +110,7 @@ const companySlice = createSlice({
         return state;
       }
       newCompanies[editIndex] = action.payload;
-      return { ...state, companies: newCompanies };
+      return { ...state, company: action.payload, companies: newCompanies };
     },
     [deleteCompany.fulfilled]: (state, action) => {
       const newCompanies = [...state.companies];
