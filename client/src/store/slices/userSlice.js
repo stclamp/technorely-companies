@@ -22,7 +22,6 @@ export const editUser = createAsyncThunk(
 
 const initialState = {
   user: {},
-  users: [],
 };
 
 const userSlice = createSlice({
@@ -55,6 +54,8 @@ const userSlice = createSlice({
     },
     [editUser.fulfilled]: (state, action) => {
       state.user = action.payload;
+      state.user.isAuth = true;
+      state.user.isLoading = false;
       delete state.user.password;
     },
   },

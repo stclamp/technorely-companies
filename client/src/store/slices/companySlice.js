@@ -7,7 +7,6 @@ export const getCompanies = createAsyncThunk(
     const res = await axios.post("http://localhost:3000/companies/all", {
       userId: userId,
     });
-    console.log(res.data);
     return res.data;
   }
 );

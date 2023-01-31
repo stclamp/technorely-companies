@@ -38,8 +38,4 @@ export class User {
   @Column()
   @IsNotEmpty()
   position: string;
-
-  @Column({ default: 'user' })
-  @IsNotEmpty()
-  role: string;
 }

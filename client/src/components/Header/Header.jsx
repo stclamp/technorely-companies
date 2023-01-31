@@ -95,26 +95,24 @@ function Header({ handleLogout }) {
                     <Typography textAlign="center">Companies</Typography>
                   </MenuItem>
                   {user.role === "admin" && (
-                    <>
-                      <MenuItem
-                        onClick={() => {
-                          handleCloseUserMenu();
-                          navigate("/userlist");
-                        }}
-                      >
-                        <Typography textAlign="center">User List</Typography>
-                      </MenuItem>
-                      <MenuItem
-                        onClick={() => {
-                          handleCloseUserMenu();
-                          navigate("/companieslist");
-                        }}
-                      >
-                        <Typography textAlign="center">
-                          Companies List
-                        </Typography>
-                      </MenuItem>
-                    </>
+                    <MenuItem
+                      onClick={() => {
+                        handleCloseUserMenu();
+                        navigate("/userlist");
+                      }}
+                    >
+                      <Typography textAlign="center">User List</Typography>
+                    </MenuItem>
+                  )}
+                  {user.role === "admin" && (
+                    <MenuItem
+                      onClick={() => {
+                        handleCloseUserMenu();
+                        navigate("/companieslist");
+                      }}
+                    >
+                      <Typography textAlign="center">Companies List</Typography>
+                    </MenuItem>
                   )}
                   <MenuItem
                     onClick={() => {

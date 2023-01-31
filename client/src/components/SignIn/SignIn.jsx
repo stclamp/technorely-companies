@@ -2,7 +2,7 @@ import { TextField, Button, Container } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "api/index";
-import { setUser, getUser } from "store/slices/userSlice";
+import { setUser } from "store/slices/userSlice";
 import { useEffect } from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";

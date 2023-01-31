@@ -1,4 +1,4 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import userReducer from "./slices/userSlice";
 import companyReducer from "./slices/companySlice";
 export const store = configureStore({
