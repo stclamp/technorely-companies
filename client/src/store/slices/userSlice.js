@@ -21,16 +21,8 @@ export const editUser = createAsyncThunk(
 );
 
 const initialState = {
-  email: null,
-  id: null,
-  firstName: null,
-  lastName: null,
-  phone: null,
-  nickname: null,
-  description: null,
-  position: null,
-  isAuth: false,
-  isLoading: false,
+  user: {},
+  users: [],
 };
 
 const userSlice = createSlice({
@@ -38,68 +30,32 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setUser(state, action) {
-      state.email = action.payload.email;
-      state.id = action.payload.id;
-      state.firstName = action.payload.firstName;
-      state.lastName = action.payload.lastName;
-      state.phone = action.payload.phone;
-      state.nickname = action.payload.nickname;
-      state.description = action.payload.description;
-      state.position = action.payload.position;
-      state.isAuth = true;
+      const password = action.payload.password;
+      state.user = { password, ...action.payload };
+      state.user.isAuth = true;
     },
     removeUser(state) {
-      state.email = null;
-      state.token = null;
-      state.id = null;
-      state.firstName = null;
-      state.lastName = null;
-      state.phone = null;
-      state.nickname = null;
-      state.description = null;
-      state.position = null;
-      state.isAuth = false;
-      state.isLoading = false;
+      state.user = {};
     },
   },
   extraReducers: {
     [getUser.pending]: (state) => {
-      state.isLoading = true;
-      state.isAuth = true;
+      state.user.isLoading = true;
+      state.user.isAuth = true;
     },
     [getUser.fulfilled]: (state, action) => {
-      state.email = action.payload.email;
-      state.id = action.payload.id;
-      state.firstName = action.payload.firstName;
-      state.lastName = action.payload.lastName;
-      state.phone = action.payload.phone;
-      state.nickname = action.payload.nickname;
-      state.description = action.payload.description;
-      state.position = action.payload.position;
-      state.isAuth = true;
-      state.isLoading = false;
+      const password = action.payload.password;
+      state.user = { password, ...action.payload };
+      state.user.isAuth = true;
+      state.user.isLoading = false;
     },
     [getUser.rejected]: (state) => {
-      state.email = null;
-      state.id = null;
-      state.firstName = null;
-      state.lastName = null;
-      state.phone = null;
-      state.nickname = null;
-      state.description = null;
-      state.position = null;
-      state.isAuth = false;
-      state.isLoading = false;
+      state.user = {};
       localStorage.removeItem("email");
     },
     [editUser.fulfilled]: (state, action) => {
-      state.email = action.payload.email;
-      state.firstName = action.payload.firstName;
-      state.lastName = action.payload.lastName;
-      state.phone = action.payload.phone;
-      state.nickname = action.payload.nickname;
-      state.description = action.payload.description;
-      state.position = action.payload.position;
+      state.user = action.payload;
+      delete state.user.password;
     },
   },
 });

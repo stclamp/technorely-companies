@@ -50,8 +50,13 @@ const Modal = ({
                     alt="Close"
                   />
                   <TextField
-                    className="modal__input"
-                    label="Company name"
+                    className={
+                      touched.name && errors.name
+                        ? "modal__input form-input__error"
+                        : "modal__input"
+                    }
+                    placeholder="Company name"
+                    type="text"
                     color="secondary"
                     value={values.name}
                     onChange={handleChange("name")}
@@ -63,8 +68,13 @@ const Modal = ({
                     </div>
                   )}
                   <TextField
-                    className="modal__input"
-                    label="Company adress"
+                    className={
+                      touched.adress && errors.adress
+                        ? "modal__input form-input__error"
+                        : "modal__input"
+                    }
+                    placeholder="Company adress"
+                    type="text"
                     color="secondary"
                     value={values.adress}
                     onChange={handleChange("adress")}
@@ -76,8 +86,13 @@ const Modal = ({
                     </div>
                   )}
                   <TextField
-                    className="modal__input"
-                    label="Service of activity"
+                    className={
+                      touched.service && errors.service
+                        ? "modal__input form-input__error"
+                        : "modal__input"
+                    }
+                    placeholder="Service of activity"
+                    type="text"
                     color="secondary"
                     value={values.service}
                     onChange={handleChange("service")}
@@ -89,8 +104,13 @@ const Modal = ({
                     </div>
                   )}
                   <TextField
-                    className="modal__input"
-                    label="Numbers of employees"
+                    className={
+                      touched.numOfEmployees && errors.numOfEmployees
+                        ? "modal__input form-input__error"
+                        : "modal__input"
+                    }
+                    placeholder="Numbers of employees"
+                    type="text"
                     color="secondary"
                     value={values.numOfEmployees}
                     onChange={handleChange("numOfEmployees")}
@@ -104,8 +124,13 @@ const Modal = ({
                     </div>
                   )}
                   <TextField
-                    className="modal__input"
-                    label="Description"
+                    className={
+                      touched.description && errors.description
+                        ? "modal__input form-input__error"
+                        : "modal__input"
+                    }
+                    placeholder="Description"
+                    type="text"
                     color="secondary"
                     value={values.description}
                     onChange={handleChange("description")}
@@ -119,8 +144,13 @@ const Modal = ({
                     </div>
                   )}
                   <TextField
-                    className="modal__input"
-                    label="Type"
+                    className={
+                      touched.type && errors.type
+                        ? "modal__input form-input__error"
+                        : "modal__input"
+                    }
+                    placeholder="Type"
+                    type="text"
                     color="secondary"
                     value={values.type}
                     onChange={handleChange("type")}

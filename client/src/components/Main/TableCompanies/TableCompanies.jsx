@@ -18,31 +18,18 @@ const TableCompanies = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [companiesPerPage, setCompaniesPerPage] = useState(5);
   const [isAsc, setIsAsc] = useState(false);
   const [method, setMethod] = useState("ASC");
 
-  const getCompanyFromDb = (
-    id,
-    name,
-    adress,
-    service,
-    numOfEmployees,
-    description,
-    type
-  ) => {
+  const getCompanyFromDb = (company) => {
     dispatch(
       setCompany({
-        name,
-        adress,
-        service,
-        numOfEmployees,
-        description,
-        type,
-        userId: store.user.id,
+        ...company,
+        userId: store.user.user.id,
       })
     );
-    navigate(`/company/${id}`);
+    navigate(`/company/${company.id}`);
   };
 
   const handleChangePage = (event, newPage) => {
@@ -50,7 +37,7 @@ const TableCompanies = () => {
   };
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
+    setCompaniesPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
 
@@ -58,7 +45,7 @@ const TableCompanies = () => {
     setIsAsc(!isAsc);
     isAsc ? setMethod("ASC") : setMethod("DESC");
     dispatch(
-      sortBy({ sort: sort, userId: String(store.user.id), method: method })
+      sortBy({ sort: sort, userId: String(store.user.user.id), method: method })
     );
   };
 
@@ -95,32 +82,29 @@ const TableCompanies = () => {
             <TableBody>
               {store.company.companies &&
                 store.company.companies
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row) => (
+                  .slice(
+                    page * companiesPerPage,
+                    page * companiesPerPage + companiesPerPage
+                  )
+                  .map((company) => (
                     <TableRow
-                      key={row.id + 1}
+                      key={company.id + 1}
                       className="table__row"
                       sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                       onClick={() => {
-                        getCompanyFromDb(
-                          row.id,
-                          row.name,
-                          row.adress,
-                          row.service,
-                          row.numOfEmployees,
-                          row.description,
-                          row.type
-                        );
+                        getCompanyFromDb(company);
                       }}
                     >
                       <TableCell component="th" scope="row">
-                        {row.name}
+                        {company.name}
                       </TableCell>
-                      <TableCell align="right">{row.adress}</TableCell>
-                      <TableCell align="right">{row.service}</TableCell>
-                      <TableCell align="right">{row.numOfEmployees}</TableCell>
-                      <TableCell align="right">{row.description}</TableCell>
-                      <TableCell align="right">{row.type}</TableCell>
+                      <TableCell align="right">{company.adress}</TableCell>
+                      <TableCell align="right">{company.service}</TableCell>
+                      <TableCell align="right">
+                        {company.numOfEmployees}
+                      </TableCell>
+                      <TableCell align="right">{company.description}</TableCell>
+                      <TableCell align="right">{company.type}</TableCell>
                     </TableRow>
                   ))}
             </TableBody>
@@ -130,7 +114,7 @@ const TableCompanies = () => {
               rowsPerPageOptions={[5, 10, 25]}
               component="div"
               count={store.company.companies.length}
-              rowsPerPage={rowsPerPage}
+              rowsPerPage={companiesPerPage}
               page={page}
               onPageChange={handleChangePage}
               onRowsPerPageChange={handleChangeRowsPerPage}

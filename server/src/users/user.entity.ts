@@ -9,7 +9,6 @@ export class User {
 
   @Column({ unique: true })
   @IsNotEmpty()
-  @ValidateIf((o) => o !== '')
   email: string;
 
   @Column()
@@ -39,4 +38,8 @@ export class User {
   @Column()
   @IsNotEmpty()
   position: string;
+
+  @Column({ default: 'user' })
+  @IsNotEmpty()
+  role: string;
 }

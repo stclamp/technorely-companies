@@ -18,7 +18,7 @@ import "./Header.css";
 function Header({ handleLogout }) {
   const [anchorElUser, setAnchorElUser] = useState(null);
 
-  const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user.user);
   const navigate = useNavigate();
 
   const handleOpenUserMenu = (event) => {
@@ -94,6 +94,28 @@ function Header({ handleLogout }) {
                   >
                     <Typography textAlign="center">Companies</Typography>
                   </MenuItem>
+                  {user.role === "admin" && (
+                    <>
+                      <MenuItem
+                        onClick={() => {
+                          handleCloseUserMenu();
+                          navigate("/userlist");
+                        }}
+                      >
+                        <Typography textAlign="center">User List</Typography>
+                      </MenuItem>
+                      <MenuItem
+                        onClick={() => {
+                          handleCloseUserMenu();
+                          navigate("/companieslist");
+                        }}
+                      >
+                        <Typography textAlign="center">
+                          Companies List
+                        </Typography>
+                      </MenuItem>
+                    </>
+                  )}
                   <MenuItem
                     onClick={() => {
                       handleCloseUserMenu();

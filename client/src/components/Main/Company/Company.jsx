@@ -17,7 +17,7 @@ import "./Company.css";
 
 function Company({ id }) {
   const company = useSelector((state) => state.company.company);
-  const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user.user);
   const navigate = useNavigate();
   const [isEditable, setIsEditable] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -27,9 +27,7 @@ function Company({ id }) {
     if (!user.isAuth && user.isLoading) {
       navigate("/signin");
     }
-    dispatch(getCompany(id));
-    console.log(user.id);
-    dispatch(getCompanies(user.id + ""));
+    dispatch(getCompany(id), getCompanies(user.id + ""));
   }, [user]);
 
   const validationSchema = Yup.object().shape({
@@ -52,8 +50,7 @@ function Company({ id }) {
   });
 
   const handleRemove = (id) => {
-    dispatch(deleteCompany(id));
-    dispatch(removeCompany());
+    dispatch(deleteCompany(id), removeCompany());
     navigate("/");
   };
 
@@ -101,15 +98,15 @@ function Company({ id }) {
                 <span className="text">{company.service}</span>
               </p>
               <p className="account__text">
-                Your numOfEmployees:
+                Company number of employees:
                 <span className="text">{company.numOfEmployees}</span>
               </p>
               <p className="account__text">
-                Your description:
+                Company description:
                 <span className="text">{company.description}</span>
               </p>
               <p className="account__text">
-                Your type:
+                Company type:
                 <span className="text">{company.type}</span>
               </p>
               <Button
@@ -118,6 +115,14 @@ function Company({ id }) {
                 onClick={handleEdit}
               >
                 Edit Company Info
+              </Button>
+              <Button
+                variant="outlined"
+                color="error"
+                startIcon={<DeleteIcon />}
+                onClick={handleOpenModal}
+              >
+                DeleteCompany
               </Button>
             </>
           ) : (
@@ -254,20 +259,20 @@ function Company({ id }) {
                     >
                       Save Company Info
                     </Button>
+                    <Button
+                      variant="outlined"
+                      color="error"
+                      startIcon={<DeleteIcon />}
+                      onClick={() => handleOpenModal()}
+                    >
+                      DeleteCompany
+                    </Button>
                   </form>
                 );
               }}
             </Formik>
           )}
 
-          <Button
-            variant="outlined"
-            color="error"
-            startIcon={<DeleteIcon />}
-            onClick={() => handleOpenModal()}
-          >
-            DeleteCompany
-          </Button>
           <Modal
             isOpen={isOpen}
             handleRemove={handleRemove}

@@ -57,6 +57,13 @@ export class UserController {
     return user;
   }
 
+  @Get('adm')
+  async createAdmin() {
+    // const password = await bcrypt.hash('admin', 12);
+
+    return this.userService.createAdmin();
+  }
+
   @Post('signin')
   async login(
     @Body('email') email: string,

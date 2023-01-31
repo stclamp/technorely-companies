@@ -4,6 +4,12 @@ const axiosInstance = axios.create({
   withCredentials: true,
 });
 
+const createAdmin = async () => {
+  await axios.get("http://localhost:3000/api/adm");
+};
+
+createAdmin();
+
 export const login = async (user) => {
   const res = await axiosInstance.post(
     "http://localhost:3000/api/signin",

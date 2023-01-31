@@ -19,6 +19,7 @@
   z-index: 99;
   flex-direction: column;
   padding: 60px;
+  border-radius: 5px;
 }
 
 .modal__add-company-btn {

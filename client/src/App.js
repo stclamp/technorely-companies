@@ -13,7 +13,6 @@ import Company from "components/Main/Company/Company";
 import Header from "components/Header/Header";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { amber } from "@mui/material/colors";
-
 const theme = createTheme({
   palette: {
     primary: amber,

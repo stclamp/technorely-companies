@@ -8,8 +8,8 @@ import { editUser } from "store/slices/userSlice";
 import * as Yup from "yup";
 import "./Account.css";
 
-const Account = ({ handleLogout }) => {
-  const user = useSelector((state) => state.user);
+const Account = () => {
+  const user = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isEditable, setIsEditable] = useState(false);

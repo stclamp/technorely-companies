@@ -13,11 +13,7 @@ const SignIn = () => {
   const store = useSelector((state) => state);
 
   useEffect(() => {
-    if (!store.user.isAuth) {
-      navigate("/signin");
-    } else {
-      navigate("/");
-    }
+    !store.user.user.isAuth ? navigate("/signin") : navigate("/");
   }, []);
 
   const validationSchema = Yup.object().shape({
@@ -31,18 +27,10 @@ const SignIn = () => {
 
   const handleLogin = (values, { setFieldError }) => {
     login({ ...values })
-      .then((data) => {
+      .then((user) => {
         dispatch(
           setUser({
-            email: data.email,
-            id: data.id,
-            firstName: data.firstName,
-            lastName: data.lastName,
-            phone: data.phone,
-            numOfEmployees: data.numOfEmployees,
-            nickname: data.nickname,
-            description: data.description,
-            position: data.position,
+            ...user,
             isAuth: true,
           })
         );

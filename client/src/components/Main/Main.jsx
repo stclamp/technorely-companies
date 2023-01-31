@@ -9,16 +9,16 @@ const Main = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const store = useSelector((state) => state);
+  const user = useSelector((state) => state.user.user);
 
   useEffect(() => {
-    if (!store.user.isAuth) {
+    if (!user.isAuth) {
       navigate("/signin");
-    } else if (store.user.isAuth) {
+    } else if (user.isAuth) {
       navigate("/");
     }
-    dispatch(getCompanies(store.user.id + ""));
-  }, [store.user]);
+    dispatch(getCompanies(user.id + ""));
+  }, [user]);
 
   return (
     <div>

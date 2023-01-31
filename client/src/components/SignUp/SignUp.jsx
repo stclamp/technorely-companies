@@ -14,11 +14,7 @@ const SignUp = () => {
   const store = useSelector((state) => state);
 
   useEffect(() => {
-    if (!store.user.isAuth) {
-      navigate("/signup");
-    } else {
-      navigate("/");
-    }
+    !store.user.user.isAuth ? navigate("/signup") : navigate("/");
   }, []);
 
   const phoneRegExp =
@@ -51,19 +47,12 @@ const SignUp = () => {
       .min(2, "Position too short! Must be at least 2 characters"),
   });
 
-  const handleSignIn = (values, { setFieldError }) => {
+  const handleSignUp = (values, { setFieldError }) => {
     register({ ...values })
-      .then((data) => {
+      .then((user) => {
         dispatch(
           setUser({
-            email: data.email,
-            id: data.id,
-            firstName: data.firstName,
-            lastName: data.lastName,
-            phone: data.phone,
-            nickname: data.nickname,
-            description: data.description,
-            position: data.position,
+            ...user,
             isAuth: true,
           })
         );
@@ -88,7 +77,7 @@ const SignUp = () => {
             position: "",
           }}
           onSubmit={(values, errors) => {
-            handleSignIn(values, errors);
+            handleSignUp(values, errors);
           }}
           validationSchema={validationSchema}
         >
@@ -103,6 +92,9 @@ const SignUp = () => {
             return (
               <form className="form" onSubmit={handleSubmit}>
                 <TextField
+                  className={
+                    touched.email && errors.email ? "form-input__error" : null
+                  }
                   placeholder="Email"
                   type="email"
                   color="secondary"
@@ -116,6 +108,11 @@ const SignUp = () => {
                   </div>
                 )}
                 <TextField
+                  className={
+                    touched.password && errors.password
+                      ? "form-input__error"
+                      : null
+                  }
                   placeholder="Password"
                   type="password"
                   color="secondary"
@@ -135,7 +132,15 @@ const SignUp = () => {
                   onBlur={handleBlur("phone")}
                 >
                   {() => (
-                    <TextField placeholder="Phone number" color="secondary" />
+                    <TextField
+                      className={
+                        touched.email && errors.email
+                          ? "form-input__error"
+                          : null
+                      }
+                      placeholder="Phone number"
+                      color="secondary"
+                    />
                   )}
                 </ReactInputMask>
                 {touched.phone && errors.phone && (
@@ -145,6 +150,11 @@ const SignUp = () => {
                 )}
 
                 <TextField
+                  className={
+                    touched.firstName && errors.firstName
+                      ? "form-input__error"
+                      : null
+                  }
                   placeholder="First Name"
                   color="secondary"
                   value={values.firstName}
@@ -158,6 +168,11 @@ const SignUp = () => {
                 )}
 
                 <TextField
+                  className={
+                    touched.lastName && errors.lastName
+                      ? "form-input__error"
+                      : null
+                  }
                   placeholder="Last Name"
                   color="secondary"
                   value={values.lastName}
@@ -171,6 +186,11 @@ const SignUp = () => {
                 )}
 
                 <TextField
+                  className={
+                    touched.nickname && errors.nickname
+                      ? "form-input__error"
+                      : null
+                  }
                   placeholder="Nickname"
                   color="secondary"
                   value={values.nickname}
@@ -184,6 +204,11 @@ const SignUp = () => {
                 )}
 
                 <TextField
+                  className={
+                    touched.description && errors.description
+                      ? "form-input__error"
+                      : null
+                  }
                   placeholder="Description"
                   color="secondary"
                   value={values.description}
@@ -198,6 +223,11 @@ const SignUp = () => {
                   </div>
                 )}
                 <TextField
+                  className={
+                    touched.position && errors.position
+                      ? "form-input__error"
+                      : null
+                  }
                   placeholder="Position"
                   color="secondary"
                   value={values.position}
