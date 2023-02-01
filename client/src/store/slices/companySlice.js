@@ -1,12 +1,19 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+const axiosInstance = axios.create({
+  withCredentials: true,
+});
+
 export const getCompanies = createAsyncThunk(
   "company/getCompanies",
   async function (userId) {
-    const res = await axios.post("http://localhost:3000/companies/all", {
-      userId: userId,
-    });
+    const res = await axiosInstance.post(
+      "http://localhost:3000/companies/all",
+      {
+        userId: userId,
+      }
+    );
     return res.data;
   }
 );
@@ -14,9 +21,9 @@ export const getCompanies = createAsyncThunk(
 export const getCompany = createAsyncThunk(
   "company/getCompany",
   async function (id) {
-    const res = await axios.get(`http://localhost:3000/companies/${id}`, {
-      withCredentials: true,
-    });
+    const res = await axiosInstance.get(
+      `http://localhost:3000/companies/${id}`
+    );
 
     return res.data;
   }
@@ -25,9 +32,11 @@ export const getCompany = createAsyncThunk(
 export const createCompany = createAsyncThunk(
   "company/createCompany",
   async function (company) {
-    const res = await axios.post("http://localhost:3000/companies", company, {
-      withCredentials: true,
-    });
+    const res = await axiosInstance.post(
+      "http://localhost:3000/companies",
+      company
+    );
+
     return res.data;
   }
 );
@@ -35,7 +44,7 @@ export const createCompany = createAsyncThunk(
 export const editCompany = createAsyncThunk(
   "company/editCompany",
   async function (company) {
-    const res = await axios.patch(
+    const res = await axiosInstance.patch(
       `http://localhost:3000/companies/${company.id}`,
       company
     );
@@ -47,14 +56,14 @@ export const editCompany = createAsyncThunk(
 export const deleteCompany = createAsyncThunk(
   "company/deleteCompany",
   async function (id) {
-    await axios.delete(`http://localhost:3000/companies/${id}`);
+    await axiosInstance.delete(`http://localhost:3000/companies/${id}`);
   }
 );
 
 export const sortBy = createAsyncThunk(
   "company/sortBy",
   async function (sortBy) {
-    const res = await axios.post(
+    const res = await axiosInstance.post(
       "http://localhost:3000/companies/sort",
       sortBy
     );
@@ -72,20 +81,14 @@ const companySlice = createSlice({
   },
   reducers: {
     setCompany(state, action) {
-      state.company.name = action.payload.name;
-      state.company.adress = action.payload.adress;
-      state.company.service = action.payload.service;
-      state.company.numOfEmployees = action.numOfEmployees;
-      state.company.description = action.description;
-      state.company.type = action.payload.type;
-      state.company.userId = action.payload.userId;
+      state.company = action.payload;
     },
     removeCompany(state) {
       state.company = {};
     },
   },
   extraReducers: {
-    [getCompanies.pending]: (state, action) => {
+    [getCompanies.pending]: (state) => {
       state.isLoading = true;
     },
     [getCompanies.fulfilled]: (state, action) => {
@@ -93,11 +96,26 @@ const companySlice = createSlice({
       state.isLoading = false;
       return state;
     },
+    [getCompanies.rejected]: (state) => {
+      state.companies = [];
+      state.isLoading = false;
+    },
+    [createCompany.pending]: (state) => {
+      state.isLoading = true;
+    },
     [createCompany.fulfilled]: (state, action) => {
       state.companies.push(action.payload);
+      state.isLoading = false;
+    },
+    [createCompany.rejected]: (state) => {
+      return state;
+    },
+    [getCompany.pending]: (state) => {
+      state.isLoading = true;
     },
     [getCompany.fulfilled]: (state, action) => {
       state.company = action.payload;
+      state.isLoading = false;
     },
     [editCompany.fulfilled]: (state, action) => {
       const newCompanies = [...state.companies];

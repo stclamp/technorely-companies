@@ -1,11 +1,12 @@
-import { TextField, Button, Container } from "@mui/material";
+import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "api/index";
-import { setUser } from "store/slices/userSlice";
-import { useEffect } from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import { login } from "api/index";
+import { setUser } from "store/slices/userSlice";
+
+import { TextField, Button, Container } from "@mui/material";
 
 const SignIn = () => {
   const dispatch = useDispatch();
@@ -13,8 +14,9 @@ const SignIn = () => {
   const store = useSelector((state) => state);
 
   useEffect(() => {
+    document.title = "Sign In | Technorely Companies";
     !store.user.user.isAuth ? navigate("/signin") : navigate("/");
-  }, []);
+  }, [store.user, navigate]);
 
   const validationSchema = Yup.object().shape({
     email: Yup.string()
@@ -31,6 +33,7 @@ const SignIn = () => {
         dispatch(
           setUser({
             ...user,
+            email: user.email.toLowerCase(),
             isAuth: true,
           })
         );
@@ -82,7 +85,6 @@ const SignIn = () => {
                       <span className="form-span__error">{errors.email}</span>
                     </div>
                   )}
-
                   <TextField
                     className={
                       (touched.password && errors.password) || errors.unAuth
@@ -103,7 +105,6 @@ const SignIn = () => {
                       </span>
                     </div>
                   )}
-
                   {errors.unAuth && (
                     <div>
                       <span className="form-span__error">{errors.unAuth}</span>

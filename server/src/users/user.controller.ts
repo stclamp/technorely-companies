@@ -42,7 +42,7 @@ export class UserController {
     const hashedPassword = await bcrypt.hash(password, 12);
 
     const user = await this.userService.create({
-      email,
+      email: email.toLowerCase(),
       password: hashedPassword,
       firstName,
       lastName,
@@ -63,14 +63,15 @@ export class UserController {
     @Body('password') password: string,
     @Res({ passthrough: true }) response: Response,
   ) {
-    const user = await this.userService.findOne({ email });
+    const lowerEmail = email.toLowerCase();
+    const user = await this.userService.findOne({ email: lowerEmail });
 
     if (!user) {
-      throw new BadRequestException('invalid credentials');
+      throw new BadRequestException('Incorrect email or password');
     }
 
     if (!(await bcrypt.compare(password, user.password))) {
-      throw new BadRequestException('invalid credentials');
+      throw new BadRequestException('Incorrect email or password');
     }
 
     const jwt = await this.jwtService.signAsync({ id: user.id });
@@ -79,6 +80,7 @@ export class UserController {
 
     return { ...user, jwt };
   }
+
   @Get('user')
   async user(@Req() request: Request) {
     try {
@@ -127,7 +129,7 @@ export class UserController {
     position: string,
   ) {
     const user = await this.userService.findOne({ email });
-    user.email = email;
+    user.email = email.toLowerCase();
     user.firstName = firstName;
     user.lastName = lastName;
     user.phone = phone;

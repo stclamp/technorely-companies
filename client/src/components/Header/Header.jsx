@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -9,9 +12,7 @@ import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
-import { useSelector } from "react-redux";
-import { useNavigate, Link } from "react-router-dom";
+
 import logo from "assets/images/technorely.png";
 import "./Header.css";
 
@@ -94,26 +95,6 @@ function Header({ handleLogout }) {
                   >
                     <Typography textAlign="center">Companies</Typography>
                   </MenuItem>
-                  {user.role === "admin" && (
-                    <MenuItem
-                      onClick={() => {
-                        handleCloseUserMenu();
-                        navigate("/userlist");
-                      }}
-                    >
-                      <Typography textAlign="center">User List</Typography>
-                    </MenuItem>
-                  )}
-                  {user.role === "admin" && (
-                    <MenuItem
-                      onClick={() => {
-                        handleCloseUserMenu();
-                        navigate("/companieslist");
-                      }}
-                    >
-                      <Typography textAlign="center">Companies List</Typography>
-                    </MenuItem>
-                  )}
                   <MenuItem
                     onClick={() => {
                       handleCloseUserMenu();

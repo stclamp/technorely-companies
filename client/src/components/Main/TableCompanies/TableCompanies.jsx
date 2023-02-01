@@ -1,3 +1,8 @@
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { sortBy, setCompany } from "store/slices/companySlice";
+
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -7,11 +12,8 @@ import TableRow from "@mui/material/TableRow";
 import TablePagination from "@mui/material/TablePagination";
 import Paper from "@mui/material/Paper";
 import { Container } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
+
 import "./TableCompanies.css";
-import { sortBy, setCompany } from "store/slices/companySlice";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 
 const TableCompanies = () => {
   const store = useSelector((state) => state);

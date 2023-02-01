@@ -1,7 +1,9 @@
-import { TextField, Button } from "@mui/material";
-import close from "assets/images/close.svg";
 import { Formik } from "formik";
+import { TextField, Button } from "@mui/material";
+
+import close from "assets/images/close.svg";
 import "./Modal.css";
+
 const Modal = ({
   handleCreateCompany,
   isOpen,
@@ -11,14 +13,7 @@ const Modal = ({
   return (
     isOpen && (
       <>
-        <div
-          className="modal__wrapper"
-          onClick={(e) => {
-            if (e.target.classList.contains("modal__wrapper")) {
-              // handleModalClose();
-            }
-          }}
-        >
+        <div className="modal__wrapper">
           <Formik
             initialValues={{
               name: "",

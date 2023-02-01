@@ -1,9 +1,10 @@
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { getCompanies } from "store/slices/companySlice";
+
 import TableCompanies from "./TableCompanies/TableCompanies";
 import AddCompany from "./AddCompany/AddCompany";
-import { getCompanies } from "store/slices/companySlice";
-import { useEffect } from "react";
 
 const Main = () => {
   const dispatch = useDispatch();
@@ -12,13 +13,14 @@ const Main = () => {
   const store = useSelector((state) => state.user);
 
   useEffect(() => {
+    document.title = "Main | Technorely Companies";
     if (!store.user.isAuth) {
       navigate("/signin");
-    } else if (store.user.isAuth) {
+    } else {
       navigate("/");
+      dispatch(getCompanies(store.user.id + ""));
     }
-    dispatch(getCompanies(store.user.id + ""));
-  }, [store.user]);
+  }, [store]);
 
   return (
     <div>

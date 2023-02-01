@@ -1,5 +1,6 @@
 import { Button } from "@mui/material";
 import { Container } from "@mui/system";
+
 import "./Modal.css";
 
 function Modal({ isOpen, handleCloseModal, handleRemove, id }) {

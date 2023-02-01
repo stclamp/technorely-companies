@@ -22,6 +22,7 @@ export class CompanyController {
   getAllCompanies(@Body('userId') userId: string) {
     return this.companyService.findAll(userId);
   }
+
   @Post('sort')
   getSortedData(
     @Body('sort') sort: string,

@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { where } from 'sequelize';
 import { ChangeCompany } from './dto/change-company.dto';
 import { CreateCompany } from './dto/create-company.dto';
 import { Company } from './models/company.model';
@@ -48,6 +47,7 @@ export class CompanyService {
     company.description = createCompany.description;
     company.type = createCompany.type;
     company.userId = createCompany.userId;
+
     return company.save();
   }
 

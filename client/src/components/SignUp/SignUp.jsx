@@ -1,12 +1,13 @@
-import { TextField, Button, Container } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import ReactInputMask from "react-input-mask";
-import { register } from "api/index";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setUser } from "store/slices/userSlice";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import ReactInputMask from "react-input-mask";
+import { register } from "api/index";
+import { setUser } from "store/slices/userSlice";
+
+import { TextField, Button, Container } from "@mui/material";
 
 const SignUp = () => {
   const dispatch = useDispatch();
@@ -14,8 +15,9 @@ const SignUp = () => {
   const store = useSelector((state) => state);
 
   useEffect(() => {
+    document.title = "Sign Up | Technorely Companies";
     !store.user.user.isAuth ? navigate("/signup") : navigate("/");
-  }, []);
+  }, [store.user]);
 
   const phoneRegExp =
     /(\+[0-9]{2,4}\s\([0-9]{2,3}\)\s[0-9]{3,4}\-[0-9]{2,3}\-[0-9]{2,3})/gm;
@@ -53,6 +55,7 @@ const SignUp = () => {
         dispatch(
           setUser({
             ...user,
+            email: user.email.toLowerCase(),
             isAuth: true,
           })
         );
@@ -148,7 +151,6 @@ const SignUp = () => {
                     <span className="form-span__error">{errors.phone}</span>
                   </div>
                 )}
-
                 <TextField
                   className={
                     touched.firstName && errors.firstName
@@ -166,7 +168,6 @@ const SignUp = () => {
                     <span className="form-span__error">{errors.firstName}</span>
                   </div>
                 )}
-
                 <TextField
                   className={
                     touched.lastName && errors.lastName
@@ -184,7 +185,6 @@ const SignUp = () => {
                     <span className="form-span__error">{errors.lastName}</span>
                   </div>
                 )}
-
                 <TextField
                   className={
                     touched.nickname && errors.nickname
@@ -202,7 +202,6 @@ const SignUp = () => {
                     <span className="form-span__error">{errors.nickname}</span>
                   </div>
                 )}
-
                 <TextField
                   className={
                     touched.description && errors.description
@@ -239,7 +238,6 @@ const SignUp = () => {
                     <span className="form-span__error">{errors.position}</span>
                   </div>
                 )}
-
                 <Button variant="contained" type="submit">
                   Sign Up
                 </Button>

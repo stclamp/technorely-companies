@@ -1,10 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+const axiosInstance = axios.create({
+  withCredentials: true,
+});
+
 export const getUser = createAsyncThunk("user/getUser", async function () {
-  const res = await axios.get("http://localhost:3000/api/user", {
-    withCredentials: true,
-  });
+  const res = await axiosInstance.get("http://localhost:3000/api/user");
   localStorage.setItem("email", res.data.email);
   return res.data;
 });
@@ -12,21 +14,18 @@ export const getUser = createAsyncThunk("user/getUser", async function () {
 export const editUser = createAsyncThunk(
   "user/editUser",
   async function (user) {
-    const res = await axios.post("http://localhost:3000/api/edit", user, {
-      withCredentials: true,
-    });
+    const res = await axiosInstance.post(
+      "http://localhost:3000/api/edit",
+      user
+    );
 
     return res.data;
   }
 );
 
-const initialState = {
-  user: {},
-};
-
 const userSlice = createSlice({
   name: "user",
-  initialState,
+  initialState: { user: {} },
   reducers: {
     setUser(state, action) {
       const password = action.payload.password;
@@ -40,7 +39,7 @@ const userSlice = createSlice({
   extraReducers: {
     [getUser.pending]: (state) => {
       state.user.isLoading = true;
-      state.user.isAuth = true;
+      state.user.isAuth = false;
     },
     [getUser.fulfilled]: (state, action) => {
       const password = action.payload.password;
@@ -49,14 +48,25 @@ const userSlice = createSlice({
       state.user.isLoading = false;
     },
     [getUser.rejected]: (state) => {
+      state.user.isAuth = false;
+      state.user.isLoading = false;
       state.user = {};
       localStorage.removeItem("email");
+    },
+    [editUser.pending]: (state) => {
+      state.user.isAuth = false;
+      state.user.isLoading = true;
     },
     [editUser.fulfilled]: (state, action) => {
       state.user = action.payload;
       state.user.isAuth = true;
       state.user.isLoading = false;
       delete state.user.password;
+    },
+    [editUser.rejected]: (state) => {
+      state.user = {};
+      state.user.isAuth = false;
+      state.user.isLoading = false;
     },
   },
 });

@@ -1,10 +1,11 @@
-import { Container, Button } from "@mui/material";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createCompany } from "store/slices/companySlice";
 import * as Yup from "yup";
-import "./AddCompany.css";
+import { createCompany } from "store/slices/companySlice";
 import Modal from "./Modal/Modal";
+import { Container, Button } from "@mui/material";
+
+import "./AddCompany.css";
 
 const AddCompany = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -42,7 +43,7 @@ const AddCompany = () => {
     dispatch(
       createCompany({
         ...values,
-        userId: store.user.id + "",
+        userId: store.user.user.id + "",
       })
     );
     setIsOpen(false);

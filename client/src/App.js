@@ -1,18 +1,21 @@
-import "./App.css";
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "store/slices/userSlice";
 import { removeUser } from "store/slices/userSlice";
 import { logout } from "api/index";
+
 import SignIn from "./components/SignIn/SignIn";
 import SignUp from "./components/SignUp/SignUp";
 import Main from "./components/Main/Main";
-import { useEffect } from "react";
 import Account from "components/Account/Account";
 import Company from "components/Main/Company/Company";
 import Header from "components/Header/Header";
+
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { amber } from "@mui/material/colors";
+import "./App.css";
+
 const theme = createTheme({
   palette: {
     primary: amber,

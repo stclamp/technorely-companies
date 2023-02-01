@@ -1,11 +1,12 @@
-import { Button, Container, TextField } from "@mui/material";
-import { Formik } from "formik";
 import { useState, useEffect } from "react";
-import ReactInputMask from "react-input-mask";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { editUser } from "store/slices/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import ReactInputMask from "react-input-mask";
+import { Formik } from "formik";
 import * as Yup from "yup";
+import { editUser } from "store/slices/userSlice";
+import { Button, Container, TextField } from "@mui/material";
+
 import "./Account.css";
 
 const Account = () => {
@@ -15,6 +16,7 @@ const Account = () => {
   const [isEditable, setIsEditable] = useState(false);
 
   useEffect(() => {
+    document.title = "Account | Technorely Companies";
     if (!user.isAuth && user.isLoading) {
       navigate("/signin");
     }
@@ -121,8 +123,12 @@ const Account = () => {
                     <div className="account__text">
                       Your first name:
                       <TextField
+                        className={
+                          errors.firstName
+                            ? "account__input form-input__error"
+                            : "account__input"
+                        }
                         color="secondary"
-                        className="account__input"
                         value={values.firstName}
                         onChange={handleChange("firstName")}
                         onBlur={handleBlur("firstName")}
@@ -138,8 +144,12 @@ const Account = () => {
                     <div className="account__text">
                       Your last name:
                       <TextField
+                        className={
+                          errors.lastName
+                            ? "account__input form-input__error"
+                            : "account__input"
+                        }
                         color="secondary"
-                        className="account__input"
                         value={values.lastName}
                         onChange={handleChange("lastName")}
                         onBlur={handleBlur("lastName")}
@@ -155,8 +165,12 @@ const Account = () => {
                     <div className="account__text">
                       Your nickname:
                       <TextField
+                        className={
+                          errors.nickname
+                            ? "account__input form-input__error"
+                            : "account__input"
+                        }
                         color="secondary"
-                        className="account__input"
                         value={values.nickname}
                         onChange={handleChange("nickname")}
                         onBlur={handleBlur("nickname")}
@@ -179,7 +193,11 @@ const Account = () => {
                       >
                         {() => (
                           <TextField
-                            className="account__input"
+                            className={
+                              errors.phone
+                                ? "account__input form-input__error"
+                                : "account__input"
+                            }
                             color="secondary"
                           />
                         )}
@@ -195,8 +213,12 @@ const Account = () => {
                     <div className="account__text">
                       Your position:
                       <TextField
+                        className={
+                          errors.position
+                            ? "account__input form-input__error"
+                            : "account__input"
+                        }
                         color="secondary"
-                        className="account__input"
                         value={values.position}
                         onChange={handleChange("position")}
                         onBlur={handleBlur("position")}
@@ -212,8 +234,12 @@ const Account = () => {
                     <div className="account__text">
                       Your description:
                       <TextField
+                        className={
+                          errors.description
+                            ? "account__input form-input__error"
+                            : "account__input"
+                        }
                         color="secondary"
-                        className="account__input"
                         value={values.description}
                         onChange={handleChange("description")}
                         onBlur={handleBlur("description")}

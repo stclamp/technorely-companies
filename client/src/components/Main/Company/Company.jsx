@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import {
   editCompany,
   getCompany,
@@ -8,11 +8,13 @@ import {
   deleteCompany,
   removeCompany,
 } from "store/slices/companySlice";
-import { Button, Container, TextField } from "@mui/material";
-import Modal from "./Modal/Modal";
-import DeleteIcon from "@mui/icons-material/Delete";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import Modal from "./Modal/Modal";
+
+import DeleteIcon from "@mui/icons-material/Delete";
+import { Button, Container, TextField } from "@mui/material";
+
 import "./Company.css";
 
 function Company({ id }) {
@@ -24,9 +26,7 @@ function Company({ id }) {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    if (!user.isAuth && user.isLoading) {
-      navigate("/signin");
-    }
+    document.title = `${company.name} | Technorely Companies`;
     dispatch(getCompany(id), getCompanies(user.id + ""));
   }, [user]);
 
@@ -154,7 +154,11 @@ function Company({ id }) {
                       Company name:
                       <TextField
                         color="secondary"
-                        className="account__input"
+                        className={
+                          errors.name
+                            ? "account__input form-input__error"
+                            : "account__input"
+                        }
                         value={values.name}
                         onChange={handleChange("name")}
                         onBlur={handleBlur("name")}
@@ -170,8 +174,12 @@ function Company({ id }) {
                     <div className="account__text">
                       Company adress:
                       <TextField
+                        className={
+                          errors.adress
+                            ? "account__input form-input__error"
+                            : "account__input"
+                        }
                         color="secondary"
-                        className="account__input"
                         value={values.adress}
                         onChange={handleChange("adress")}
                         onBlur={handleBlur("adress")}
@@ -187,8 +195,12 @@ function Company({ id }) {
                     <div className="account__text">
                       Company service:
                       <TextField
+                        className={
+                          errors.service
+                            ? "account__input form-input__error"
+                            : "account__input"
+                        }
                         color="secondary"
-                        className="account__input"
                         value={values.service}
                         onChange={handleChange("service")}
                         onBlur={handleBlur("service")}
@@ -204,8 +216,12 @@ function Company({ id }) {
                     <div className="account__text">
                       Company number of employees:
                       <TextField
+                        className={
+                          errors.numOfEmployees
+                            ? "account__input form-input__error"
+                            : "account__input"
+                        }
                         color="secondary"
-                        className="account__input"
                         value={values.numOfEmployees}
                         onChange={handleChange("numOfEmployees")}
                         onBlur={handleBlur("numOfEmployees")}
@@ -221,8 +237,12 @@ function Company({ id }) {
                     <div className="account__text">
                       Company description:
                       <TextField
+                        className={
+                          errors.description
+                            ? "account__input form-input__error"
+                            : "account__input"
+                        }
                         color="secondary"
-                        className="account__input"
                         value={values.description}
                         onChange={handleChange("description")}
                         onBlur={handleBlur("description")}
@@ -238,8 +258,12 @@ function Company({ id }) {
                     <div className="account__text">
                       Company type:
                       <TextField
+                        className={
+                          errors.type
+                            ? "account__input form-input__error"
+                            : "account__input"
+                        }
                         color="secondary"
-                        className="account__input"
                         value={values.type}
                         onChange={handleChange("type")}
                         onBlur={handleBlur("type")}
